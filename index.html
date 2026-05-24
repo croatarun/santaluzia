@@ -2,304 +2,349 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>8ª Pedalada de Santa Luzia | Official Race Page</title>
+    <title>8ª Pedalada de Santa Luzia | Official Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #d4af37; /* Gold */
-            --bg-dark: #0a0c10;
-            --surface: #161a21;
-            --text-high: #ffffff;
-            --text-mid: #a0aec0;
-            --race-red: #e53e3e;
+            --primary: #D4AF37;
+            --primary-hover: #B8962E;
+            --bg: #0C0F14;
+            --surface: #161B22;
+            --surface-accent: #1C2129;
+            --text-primary: #FFFFFF;
+            --text-secondary: #8B949E;
+            --border: rgba(255, 255, 255, 0.08);
+            --container-width: 1100px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-high);
+            background-color: var(--bg);
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
-            line-height: 1.5;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* TYPOGRAPHY */
-        h1, h2, .race-number { font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; }
-
-        /* HERO SECTION */
+        /* Hero Section */
         .hero {
             position: relative;
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 120px 20px 80px;
             text-align: center;
-            padding: 20px;
-            background: linear-gradient(rgba(10, 12, 16, 0.6), var(--bg-dark)), 
-                        url('https://images.unsplash.com/photo-1541625602330-2277a4c4b08d?auto=format&fit=crop&q=80&w=2070') center/cover;
+            background: radial-gradient(circle at top, #1C2129 0%, var(--bg) 80%);
+            border-bottom: 1px solid var(--border);
         }
 
-        .hero::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: repeating-linear-gradient(90deg, var(--primary), var(--primary) 20px, transparent 20px, transparent 40px);
-        }
-
-        .race-tag {
-            background: var(--primary);
-            color: #000;
-            padding: 4px 15px;
-            font-weight: 900;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            margin-bottom: 20px;
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
             letter-spacing: 2px;
+            margin-bottom: 24px;
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 12vw, 6rem);
-            line-height: 0.9;
-            margin-bottom: 20px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(2.5rem, 10vw, 5rem);
             font-weight: 900;
             font-style: italic;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            line-height: 0.95;
+            text-transform: uppercase;
+            margin-bottom: 24px;
         }
 
-        /* COUNTDOWN PRO */
+        .hero h1 span { color: var(--primary); }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Countdown */
         .countdown {
             display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 48px;
         }
 
-        .cd-box {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 20px;
-            border-radius: 8px;
-            min-width: 80px;
+        .cd-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 12px;
+            min-width: 85px;
         }
 
-        .cd-box .race-number { font-size: 2rem; color: var(--primary); display: block; }
-        .cd-box label { font-size: 0.6rem; color: var(--text-mid); text-transform: uppercase; letter-spacing: 1px; }
+        .cd-item span {
+            display: block;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
 
-        /* BUTTONS */
-        .btn {
-            padding: 20px 40px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 900;
+        .cd-item label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: 0.3s;
-            display: inline-block;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 1.2rem;
         }
 
-        .btn-register { background: var(--primary); color: #000; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
-        .btn-register:hover { transform: scale(1.05); filter: brightness(1.1); }
-
-        /* MAIN CONTENT */
-        .container {
-            max-width: 1100px;
-            margin: -50px auto 0;
-            padding: 0 20px 100px;
-            position: relative;
-            z-index: 10;
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
         }
 
-        .info-grid {
+        .btn {
+            padding: 18px 36px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-main {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-main:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        /* Content Grid */
+        .content {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
         }
 
         .card {
             background: var(--surface);
+            border: 1px solid var(--border);
             padding: 40px;
-            border-radius: 12px;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-radius: 16px;
         }
 
-        .card h2 { font-size: 2rem; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
-        .card h2 svg { color: var(--primary); }
+        .card-full { grid-column: 1 / -1; }
 
-        .list-pro { list-style: none; }
-        .list-pro li {
-            padding: 15px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .card h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 1.75rem;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .info-list { list-style: none; }
+
+        .info-list li {
             display: flex;
             justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        .list-pro li b { color: var(--primary); font-family: 'Barlow Condensed'; font-size: 1.1rem; }
-        .list-pro li span { font-weight: 400; text-align: right; font-size: 0.95rem;}
+        .info-list li:last-child { border: none; }
 
-        /* BINGO CARD SPECIAL */
-        .bingo-card {
-            grid-column: 1 / -1;
-            background: linear-gradient(45deg, #161a21, #1e2532);
+        .info-list .label { color: var(--text-secondary); font-weight: 500; }
+        .info-list .value { color: var(--text-primary); font-weight: 700; text-align: right; }
+
+        /* Bingo Highlight */
+        .prize-card {
+            background: linear-gradient(135deg, #1C2129 0%, #0C0F14 100%);
+            border: 1px solid var(--primary);
             text-align: center;
-            border-left: none;
-            border-top: 4px solid var(--primary);
         }
 
-        .prize-announcement {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: var(--text-high);
-            margin: 20px 0;
+        .prize-title {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+
+        .prize-amount {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
             font-weight: 900;
+            line-height: 1;
+            margin-bottom: 16px;
         }
 
-        /* WHATSAPP GROUP CARD */
-        .group-card {
-            background: #128c7e;
-            color: white;
-            border-left: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .btn-group { background: white; color: #128c7e; padding: 12px 25px; border-radius: 50px; font-size: 0.9rem; }
-
-        /* FOOTER / SPONSORS */
-        .sponsors {
-            margin-top: 60px;
+        /* Sponsors */
+        .footer {
+            padding: 80px 20px;
+            background: var(--surface);
             text-align: center;
-            padding-bottom: 50px;
         }
 
-        .sponsor-list {
+        .sponsor-grid {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            gap: 40px;
+            opacity: 0.5;
+            margin-top: 40px;
         }
 
-        .sponsor-item {
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.8rem;
-            color: var(--text-mid);
+        .sponsor-name {
             font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
         }
 
-        /* FLOATING WHATSAPP */
-        .wa-float {
+        /* WhatsApp Fab */
+        .fab {
             position: fixed;
-            bottom: 30px; right: 30px;
-            background: #25d366;
-            width: 60px; height: 60px;
+            bottom: 32px;
+            right: 32px;
+            width: 56px;
+            height: 56px;
+            background-color: #25D366;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+            z-index: 100;
+            transition: transform 0.3s ease;
         }
-        .wa-float:hover { transform: scale(1.1) rotate(10deg); }
 
-        @media (max-width: 768px) {
-            .hero { height: 80vh; }
-            .container { margin-top: -30px; }
-            .card { padding: 30px 20px; }
+        .fab:hover { transform: scale(1.1); }
+
+        /* Responsive */
+        @media (max-width: 850px) {
+            .grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 80px; }
+            .card { padding: 32px 24px; }
         }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <span class="race-tag">OFFICIAL EVENT 2026</span>
-        <h1>8ª PEDALADA<br><span style="color: var(--primary);">SANTA LUZIA</span></h1>
-        
+    <header class="hero">
+        <div class="hero-badge">27 de Junho • 2026</div>
+        <h1>8ª Pedalada<br><span>Santa Luzia</span></h1>
+        <p>O evento que une o ciclismo regional em uma jornada de fé e superação entre Croatá dos Martins e Pires Ferreira.</p>
+
         <div class="countdown">
-            <div class="cd-box"><span class="race-number" id="days">00</span><label>Dias</label></div>
-            <div class="cd-box"><span class="race-number" id="hours">00</span><label>Horas</label></div>
-            <div class="cd-box"><span class="race-number" id="minutes">00</span><label>Min</label></div>
-            <div class="cd-box"><span class="race-number" id="seconds">00</span><label>Seg</label></div>
+            <div class="cd-item"><span id="days">00</span><label>Dias</label></div>
+            <div class="cd-item"><span id="hours">00</span><label>Horas</label></div>
+            <div class="cd-item"><span id="minutes">00</span><label>Min</label></div>
+            <div class="cd-item"><span id="seconds">00</span><label>Seg</label></div>
         </div>
 
-        <a href="https://forms.gle/kEjNLwndTmANvGTQ8" class="btn btn-register" target="_blank">GARANTIR MINHA INSCRIÇÃO</a>
-    </section>
+        <div class="btn-group">
+            <a href="https://forms.gle/kEjNLwndTmANvGTQ8" class="btn btn-main" target="_blank">Fazer Inscrição</a>
+            <a href="https://chat.whatsapp.com/GwZtyHCKVF8C9HwitvwVfB" class="btn btn-secondary" target="_blank">Grupo Oficial</a>
+        </div>
+    </header>
 
-    <div class="container">
-        <div class="info-grid">
-            
+    <main class="content">
+        <div class="grid">
             <div class="card">
-                <h2>🕒 CRONOGRAMA</h2>
-                <ul class="list-pro">
-                    <li><b>CONCENTRAÇÃO</b> <span>05h30 - Capela Santa Luzia</span></li>
-                    <li><b>LARGADA</b> <span>06h00 (PONTUAL)</span></li>
-                    <li><b>DESTINO</b> <span>Capela Delmiro Gouveia</span></li>
-                    <li><b>EVENTO</b> <span>Música ao vivo no Neno</span></li>
+                <h2>Programação</h2>
+                <ul class="info-list">
+                    <li><span class="label">Concentração</span><span class="value">05h30 — Capela Sta Luzia</span></li>
+                    <li><span class="label">Largada</span><span class="value">06h00 — Pontual</span></li>
+                    <li><span class="label">Percurso</span><span class="value">Croatá → Delmiro Gouveia</span></li>
+                    <li><span class="label">Confraternização</span><span class="value">Música ao Vivo no Neno</span></li>
                 </ul>
             </div>
 
             <div class="card">
-                <h2>📦 KIT DO ATLETA</h2>
-                <ul class="list-pro">
-                    <li><b>VESTUÁRIO</b> <span>Camisa Oficial do Evento</span></li>
-                    <li><b>ID</b> <span>Número para Bike</span></li>
-                    <li><b>RECOMPENSA</b> <span>Medalha de Participação</span></li>
-                    <li><b>RECURSOS</b> <span>Frutas e Hidratação</span></li>
+                <h2>Kit Atleta</h2>
+                <ul class="info-list">
+                    <li><span class="label">Camisa</span><span class="value">Oficial Dry-Fit</span></li>
+                    <li><span class="label">Placa</span><span class="value">Número para Bike</span></li>
+                    <li><span class="label">Mérito</span><span class="value">Medalha de Participação</span></li>
+                    <li><span class="label">Suporte</span><span class="value">Frutas e Hidratação</span></li>
                 </ul>
             </div>
 
-            <div class="card bingo-card">
-                <p style="text-transform: uppercase; letter-spacing: 2px; color: var(--primary); font-weight: 700;">Grande Sorteio Beneficente</p>
-                <div class="prize-announcement">BIKE R$ 1.000,00</div>
-                <p style="color: var(--text-mid); max-width: 500px; margin: 0 auto;">Inscrição inclui 1 cartela oficial. Sorteio também de capacetes, garrafas e acessórios profissionais.</p>
+            <div class="card card-full prize-card">
+                <div class="prize-title">Prêmio Principal do Bingo</div>
+                <div class="prize-amount">BIKE R$ 1.000,00</div>
+                <p style="color: var(--text-secondary);">A sua inscrição garante automaticamente 01 cartela oficial.<br>Sorteios extras: Capacetes, Óculos e Brindes exclusivos.</p>
             </div>
-
-            <div class="card group-card">
-                <h2 style="color: white; margin-bottom: 10px;">COMUNIDADE</h2>
-                <p style="text-align: center; font-size: 0.9rem;">Entre no grupo oficial para receber avisos, fotos e atualizações em tempo real.</p>
-                <a href="https://chat.whatsapp.com/GwZtyHCKVF8C9HwitvwVfB" class="btn btn-group" target="_blank">ENTRAR NO GRUPO DO WHATSAPP</a>
-            </div>
-
         </div>
+    </main>
 
-        <section class="sponsors">
-            <h3>APOIO OFICIAL</h3>
-            <div class="sponsor-list">
-                <div class="sponsor-item">CROATÁ RUN</div>
-                <div class="sponsor-item">EUDES MESQUITA</div>
-                <div class="sponsor-item">EUDES NOBRE</div>
-                <div class="sponsor-item">PREFEITURA DE VARJOTA</div>
-                <div class="sponsor-item">RENÊ MORAIS</div>
-                <div class="sponsor-item">PAULINO CAR</div>
-            </div>
-        </section>
-    </div>
+    <footer class="footer">
+        <div style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; color: var(--text-secondary);">Apoio Institucional</div>
+        <div class="sponsor-grid">
+            <span class="sponsor-name">CROATÁ RUN</span>
+            <span class="sponsor-name">EUDES MESQUITA</span>
+            <span class="sponsor-name">EUDES NOBRE</span>
+            <span class="sponsor-name">PREFEITURA DE VARJOTA</span>
+            <span class="sponsor-name">RENÊ MORAIS</span>
+            <span class="sponsor-name">PAULINO CAR</span>
+        </div>
+        <p style="margin-top: 60px; font-size: 0.75rem; color: var(--text-secondary); opacity: 0.5;">&copy; 2026 Pedalada de Santa Luzia. Todos os direitos reservados.</p>
+    </footer>
 
-    <a href="https://chat.whatsapp.com/GwZtyHCKVF8C9HwitvwVfB" class="wa-float" target="_blank">
-        <svg width="35" height="35" viewBox="0 0 24 24" fill="white">
+    <a href="https://chat.whatsapp.com/GwZtyHCKVF8C9HwitvwVfB" class="fab" target="_blank">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#FFF">
             <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766 0-3.18-2.587-5.766-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217s.231.001.332.005c.109.004.258-.041.404.311.144.354.491 1.2.535 1.288.044.088.072.19.014.306-.058.116-.087.188-.173.289l-.26.303c-.087.101-.177.211-.076.386.101.174.451.744.966 1.204.665.594 1.223.778 1.397.865.174.088.275.073.376-.044.101-.116.434-.506.549-.68.116-.174.232-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
         </svg>
     </a>
 
     <script>
-        // Countdown Logic
         const eventDate = new Date("June 27, 2026 06:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
             const diff = eventDate - now;
 
-            if (diff <= 0) {
-                document.querySelector('.countdown').innerHTML = "<h2 style='color:var(--primary)'>A LARGADA FOI DADA!</h2>";
-                return;
-            }
+            if (diff <= 0) return;
 
             const d = Math.floor(diff / (1000 * 60 * 60 * 24));
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
