@@ -2,170 +2,161 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>8ª Pedalada de Santa Luzia</title>
+    <title>8ª Pedalada de Santa Luzia | 2026</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
-            --primary: #facc15; /* Amarelo Energia */
-            --secondary: #3b82f6; /* Azul Esportivo */
-            --dark: #0f172a;
-            --card-dark: #1e293b;
-            --light: #f8fafc;
-            --card-light: #ffffff;
-            --accent: #ef4444;
+            --primary: #fbce07; /* Amarelo Neon */
+            --secondary: #00f2ff; /* Ciano Esportivo */
+            --bg-dark: #05080f;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --accent: #ff4757;
         }
 
-        * { box-sizing: border-box; transition: all 0.3s ease; }
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
         body {
             margin: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--dark);
-            color: white;
-            line-height: 1.6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        body.light {
-            background: var(--light);
-            color: #1e293b;
+        /* EFEITO DE FUNDO DINÂMICO */
+        body::before {
+            content: "";
+            position: fixed;
+            top: -10%; left: -10%;
+            width: 40%; height: 40%;
+            background: radial-gradient(circle, rgba(251, 206, 7, 0.15) 0%, transparent 70%);
+            z-index: -1;
         }
 
-        body.light .card, body.light .hero-text {
-            background: var(--card-light);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        /* TOGGLE THEME */
-        .toggle {
+        /* BOTÃO TEMA */
+        .theme-toggle {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: var(--primary);
-            border: none;
-            width: 45px;
-            height: 45px;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            padding: 12px;
             border-radius: 50%;
             cursor: pointer;
-            z-index: 1000;
-            font-size: 20px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            z-index: 100;
         }
 
         /* HERO SECTION */
         .hero {
-            display: flex;
-            flex-direction: column;
-            min-height: 80vh;
-        }
-
-        .hero-text {
-            padding: 60px 20px;
             text-align: center;
-            background: linear-gradient(180deg, var(--dark) 0%, var(--card-dark) 100%);
+            padding: 80px 20px 40px;
+            background: linear-gradient(to bottom, rgba(5,8,15,0) 0%, var(--bg-dark) 100%);
         }
 
-        .hero-text h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--primary), #fbbf24);
+        .hero h1 {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: -1px;
         }
 
-        .hero-text p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .hero p {
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: #94a3b8;
+            margin: 20px auto;
             max-width: 600px;
-            margin: 10px auto 30px;
         }
 
-        /* COUNTDOWN */
+        /* COUNTDOWN ESTILIZADO */
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
+            gap: 10px;
+            margin: 40px 0;
         }
 
         .box {
-            background: rgba(255,255,255,0.1);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             padding: 15px;
-            border-radius: 15px;
-            min-width: 80px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            min-width: 75px;
         }
 
         .box span {
+            display: block;
             font-size: 1.8rem;
-            font-weight: bold;
+            font-weight: 800;
             color: var(--primary);
         }
 
-        /* BOTÃO */
-        .btn {
+        .box label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        /* BOTÃO PRINCIPAL */
+        .cta-button {
             display: inline-block;
             background: var(--primary);
-            padding: 18px 35px;
-            border-radius: 50px;
             color: #000;
+            padding: 20px 40px;
+            border-radius: 100px;
             font-weight: 800;
             text-decoration: none;
             font-size: 1.1rem;
-            box-shadow: 0 10px 20px rgba(250, 204, 21, 0.3);
             text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(251, 206, 7, 0.3);
+            margin-top: 20px;
         }
 
-        .btn:hover {
-            transform: scale(1.05);
-            filter: brightness(1.1);
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(251, 206, 7, 0.5);
         }
 
-        /* IMAGEM */
-        .hero-image {
-            width: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
+        /* CARDS E GRIDS */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 40px 20px;
         }
 
-        .hero-image img {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        /* SEÇÕES E CARDS */
-        .section {
-            max-width: 1000px;
-            margin: auto;
-            padding: 40px 20px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: var(--card-dark);
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
             padding: 30px;
-            border-radius: 24px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
         }
 
         .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             color: var(--primary);
-            margin-top: 0;
-        }
-
-        /* GRID DE INFO */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
         }
 
         .list {
@@ -174,178 +165,181 @@
         }
 
         .list li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 0;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        /* BINGO DESTAQUE */
-        .bingo-card {
-            background: linear-gradient(135deg, #1e40af, #1e3a8a);
-            color: white;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px dashed var(--primary);
-        }
-
-        .bingo-card h3 { margin: 0; color: var(--primary); }
-        .price-tag { font-size: 2rem; font-weight: 800; display: block; margin: 10px 0; }
-
-        /* PATROCINADORES */
-        .sponsors {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
-        .sponsor {
-            background: rgba(255,255,255,0.05);
-            height: 80px;
-            border-radius: 12px;
+        /* DESTAQUE BINGO */
+        .bingo-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #1a365d 0%, #05080f 100%);
+            border: 2px solid var(--primary);
+            text-align: center;
+        }
+
+        .price-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #000;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.8rem;
+            margin: 15px 0;
+        }
+
+        /* SPONSORS */
+        .sponsors-track {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: center;
-            font-weight: bold;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sponsor-item {
+            background: rgba(255,255,255,0.03);
+            padding: 15px 30px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
             opacity: 0.7;
         }
 
-        .whatsapp {
+        /* WHATSAPP FLOAT */
+        .whatsapp-link {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: #22c55e;
-            color: white;
-            width: 60px;
-            height: 60px;
+            background: #25d366;
+            width: 60px; height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 30px;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
             text-decoration: none;
-            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.4);
             z-index: 1000;
         }
 
-        @media (max-width: 768px) {
-            .hero-text h1 { font-size: 2rem; }
-            .info-grid { grid-template-columns: 1fr; }
+        /* RESPONSIVIDADE ADICIONAL */
+        @media (max-width: 480px) {
+            .box { min-width: 65px; padding: 10px; }
+            .hero { padding-top: 60px; }
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<button class="toggle" onclick="toggleTheme()">🌓</button>
+<button class="theme-toggle" onclick="toggleTheme()">🌓</button>
 
 <section class="hero">
-    <div class="hero-text">
-        <h1>8ª Pedalada de Santa Luzia</h1>
-        <p>Prepare sua bike! Uma jornada de fé, esporte e parceria saindo de Croatá dos Martins.</p>
+    <h1>8ª Pedalada <br> Santa Luzia</h1>
+    <p>A maior celebração do ciclismo em Croatá dos Martins. Fé, esporte e brindes exclusivos aguardam por você!</p>
 
-        <div class="countdown">
-            <div class="box"><span id="d">--</span><br>DIAS</div>
-            <div class="box"><span id="h">--</span><br>HRS</div>
-            <div class="box"><span id="m">--</span><br>MIN</div>
-            <div class="box"><span id="s">--</span><br>SEG</div>
-        </div>
-
-        <a class="btn" href="https://wa.me/5588998202785" target="_blank">
-            🚴‍♂️ Garantir minha vaga
-        </a>
+    <div class="countdown" id="timer">
+        <div class="box"><span id="d">00</span><label>Dias</label></div>
+        <div class="box"><span id="h">00</span><label>Hrs</label></div>
+        <div class="box"><span id="m">00</span><label>Min</label></div>
+        <div class="box"><span id="s">00</span><label>Seg</label></div>
     </div>
 
-    <div class="hero-image">
-        <img src="SANTOISIDRORUN2026.png" alt="Ciclismo Santa Luzia">
-    </div>
+    <a class="cta-button" href="https://forms.gle/kEjNLwndTmANvGTQ8" target="_blank">
+        ⚡ Inscrição Online Aqui
+    </a>
 </section>
 
-<section class="section">
-    
-    <div class="info-grid">
+<div class="container">
+    <div class="grid">
+        
         <div class="card">
-            <h2>📅 Cronograma</h2>
+            <h2>⏱️ Programação</h2>
             <ul class="list">
-                <li>📍 <b>05:30</b> - Concentração (Capela Santa Luzia)</li>
-                <li>🏁 <b>06:00</b> - Largada Pontual</li>
-                <li>🚴 <b>Destino:</b> Capela de Delmiro Gouveia</li>
-                <li>🎉 <b>Chegada:</b> Confraternização no Neno</li>
+                <li>🚀 <b>05h30</b> - Concentração (Capela Sta Luzia)</li>
+                <li>🏁 <b>06h00</b> - Largada (Pontual)</li>
+                <li>🚴 <b>Rota:</b> Croatá → Delmiro Gouveia</li>
+                <li>🎵 <b>Final:</b> Festa e Música ao Vivo</li>
             </ul>
         </div>
 
         <div class="card">
-            <h2>🎽 Kit do Participante</h2>
+            <h2>🎁 Seu Kit Atleta</h2>
             <ul class="list">
-                <li>✔️ Camisa Oficial do Evento</li>
-                <li>✔️ Número para Bike</li>
-                <li>✔️ Medalha de Participação</li>
-                <li>✔️ Mesa de Frutas e Hidratação</li>
-                <li>✔️ Música ao vivo no local</li>
+                <li>👕 Camisa Oficial Premium</li>
+                <li>🚲 Número de Identificação</li>
+                <li>🏅 Medalha de Participação</li>
+                <li>🍉 Buffet de Frutas e Hidratação</li>
             </ul>
         </div>
-    </div>
 
-    <div class="bingo-card">
-        <h3>🎁 GRANDE SORTEIO & BINGO</h3>
-        <p>Inscrição garante 01 cartela para o bingo de:</p>
-        <span class="price-tag">🚲 1 BIKE DE R$ 1.000,00</span>
-        <p>+ Sorteios de Capacetes, Garrafas, Óculos e muitos brindes!</p>
-    </div>
-
-    <div class="card">
-        <h2>🗺️ Trajeto do Pedal</h2>
-        <p>De Croatá dos Martins (Varjota-CE) até Pires Ferreira-CE.</p>
-        <iframe 
-            style="width:100%; height:300px; border-radius:15px; border:0;"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3972.123!2d-40.2!3d-4.2!" 
-            allowfullscreen>
-        </iframe>
-    </div>
-
-    <div class="card">
-        <h2>🤝 Parceiros do Pedal</h2>
-        <div class="sponsors">
-            <div class="sponsor">CROATÁ RUN</div>
-            <div class="sponsor">PATROCÍNIO 2</div>
-            <div class="sponsor">PATROCÍNIO 3</div>
-            <div class="sponsor">PATROCÍNIO 4</div>
+        <div class="card bingo-section">
+            <h2>🔥 GRANDE BINGO</h2>
+            <p>Sua inscrição vale 01 cartela oficial!</p>
+            <div class="price-badge">🚲 BIKE R$ 1.000,00</div>
+            <p style="opacity: 0.8; font-size: 0.9rem;">
+                + Sorteios de Capacetes, Garrafas, Óculos e Brindes!
+            </p>
         </div>
+
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+            <h2>🤝 Realização e Apoio</h2>
+            <div class="sponsors-track">
+                <div class="sponsor-item">CROATÁ RUN</div>
+                <div class="sponsor-item">PARCEIRO 02</div>
+                <div class="sponsor-item">PARCEIRO 03</div>
+                <div class="sponsor-item">APOIO 04</div>
+            </div>
+        </div>
+
     </div>
+</div>
 
-</section>
-
-<a class="whatsapp" href="https://wa.me/5588998202785" target="_blank">
-    <span style="font-size: 30px;">📱</span>
+<a href="https://wa.me/5588998202785" class="whatsapp-link" target="_blank">
+    📱
 </a>
 
 <script>
+    // Função de Troca de Tema (DarkMode/LightMode)
     function toggleTheme() {
-        document.body.classList.toggle("light");
-    }
-
-    // DATA DO EVENTO: 27 de Junho de 2026
-    const eventDate = new Date("2026-06-27T06:00:00").getTime();
-
-    function update() {
-        const now = new Date().getTime();
-        const diff = eventDate - now;
-
-        if (diff < 0) {
-            document.querySelector(".countdown").innerHTML = "<h3>É HOJE! Bom pedal! 🚴</h3>";
-            return;
+        const body = document.body;
+        if(body.style.backgroundColor === 'white') {
+            body.style.backgroundColor = '#05080f';
+            body.style.color = 'white';
+        } else {
+            body.style.backgroundColor = 'white';
+            body.style.color = '#05080f';
         }
-
-        document.getElementById("d").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById("h").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        document.getElementById("m").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        document.getElementById("s").innerText = Math.floor((diff % (1000 * 60)) / 1000);
     }
 
-    setInterval(update, 1000);
-    update();
+    // Countdown - Data: 27 de Junho de 2026
+    const eventDate = new Date("June 27, 2026 06:00:00").getTime();
+
+    const timer = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("d").innerHTML = d;
+        document.getElementById("h").innerHTML = h;
+        document.getElementById("m").innerHTML = m;
+        document.getElementById("s").innerHTML = s;
+
+        if (distance < 0) {
+            clearInterval(timer);
+            document.getElementById("timer").innerHTML = "O PEDAL COMEÇOU!";
+        }
+    }, 1000);
 </script>
 
 </body>
