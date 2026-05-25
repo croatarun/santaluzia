@@ -120,6 +120,9 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
             transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-main {
@@ -140,6 +143,22 @@
 
         .btn-secondary:hover {
             background-color: rgba(255,255,255,0.05);
+        }
+
+        /* Sponsor CTA Button */
+        .btn-sponsor {
+            width: 100%;
+            max-width: 540px;
+            margin-top: 12px;
+            background: linear-gradient(90deg, rgba(212,175,55,0.05) 0%, rgba(212,175,55,0.15) 100%);
+            border: 1px dashed var(--primary);
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        .btn-sponsor:hover {
+            background: rgba(212,175,55,0.2);
+            border-style: solid;
         }
 
         /* Content Grid */
@@ -265,6 +284,7 @@
             .grid { grid-template-columns: 1fr; }
             .hero { padding-top: 80px; }
             .card { padding: 32px 24px; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
@@ -285,6 +305,10 @@
         <div class="btn-group">
             <a href="https://forms.gle/kEjNLwndTmANvGTQ8" class="btn btn-main" target="_blank">Fazer Inscrição</a>
             <a href="https://chat.whatsapp.com/GwZtyHCKVF8C9HwitvwVfB" class="btn btn-secondary" target="_blank">Grupo Oficial</a>
+            
+            <a href="https://wa.me/558898715409?text=Quero%20ser%20um%20patrocinador%20da%208a%20Pedalada" class="btn btn-sponsor" target="_blank">
+                🤝 Seja nosso Patrocinador
+            </a>
         </div>
     </header>
 
@@ -324,7 +348,7 @@
             <span class="sponsor-name">CROATÁ RUN</span>
             <span class="sponsor-name">EUDES MESQUITA</span>
             <span class="sponsor-name">EUDES NOBRE</span>
-            <span class="sponsor-name">PREFEITURA DE VARJOTA</span>
+            <span class="sponsor-name">PREFEITURA MUN. DE VARJOTA</span>
             <span class="sponsor-name">RENÊ MORAIS</span>
             <span class="sponsor-name">PAULINO CAR</span>
         </div>
