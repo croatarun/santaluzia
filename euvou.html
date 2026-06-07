@@ -125,32 +125,6 @@
 
         // 4. TEXTOS (NOME E EQUIPE)
         renderTextos();
-    }
-
-    function renderEuVouImpacto() {
-        const x = W / 2;
-        const y = 1175;
-        const txt = "EU VOU";
-
-        ctx.save();
-        ctx.textAlign = 'center';
-        ctx.translate(x, y);
-        ctx.rotate(-0.04);
-
-        // TARJA VERDE ESCURO (Identidade Saraletii)
-        ctx.fillStyle = "rgba(26, 58, 22, 0.95)"; 
-        ctx.shadowColor = "rgba(0,0,0,0.3)";
-        ctx.shadowBlur = 15;
-        ctx.fillRect(-380, -110, 760, 165);
-
-        // TEXTO BRANCO
-        ctx.font = "italic 195px 'Permanent Marker'";
-        ctx.shadowBlur = 0; 
-        ctx.fillStyle = "#FFFFFF";
-        ctx.fillText(txt, 0, 10);
-
-        ctx.restore();
-    }
 
     function renderTextos() {
         const nome = document.getElementById('nomeAtleta').value.toUpperCase().trim();
