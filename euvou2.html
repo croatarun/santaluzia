@@ -3,566 +3,754 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuVou! Studio | VIII Pedalada Santa Luzia | Edição Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>fotoscuderia | Estúdio de Cards Premium</title>
+    <!-- Fonte Inter para um visual limpo, moderno e profissional -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* DEFINIÇÃO DE CORES E VARIÁVEIS - ESTÉTICA CYBER-SPORT */
+        /* ==========================================================================
+           VARIÁVEIS DE COR (DESIGN SYSTEM) - ESTILO HIGH-CONTRAST
+           ========================================================================== */
         :root {
-            /* Cores de Fundo - Deep Charcoal */
-            --bg-dark: #080a10;
-            --bg-panel: rgba(18, 22, 33, 0.85); /* Vidro fosco */
-            --bg-card: #161b29;
+            /* Modo Escuro (Padrão) */
+            --bg-main: #0a0a0a;
+            --bg-surface: #121212;
+            --bg-card: #1a1a1a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --accent-color: #ffffff; /* Contraste puro */
+            --accent-inverse: #000000;
+            --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.5);
             
-            /* Cores de Acento - Neon e Ultra */
-            --electric-green: #00ff88;
-            --electric-green-glow: rgba(0, 255, 136, 0.3);
-            --ultra-purple: #8800ff;
-            --ultra-purple-glow: rgba(136, 0, 255, 0.2);
-            --gradient-primary: linear-gradient(135deg, var(--electric-green) 0%, var(--ultra-purple) 100%);
+            /* Cores fixas do WhatsApp */
+            --whatsapp-green: #25D366;
             
-            /* Cores de Texto e Bordas */
-            --text-main: #f0f4f8;
-            --text-muted: #8a9bb0;
-            --border-light: rgba(255, 255, 255, 0.06);
-            --border-neon: rgba(0, 255, 136, 0.15);
-            
-            /* Outros Detalhes */
-            --radius-lg: 28px;
-            --radius-md: 16px;
-            --shadow-panel: 0 32px 64px -16px rgba(0, 0, 0, 0.6);
-            --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            /* Raio de curvatura padrão */
+            --radius-main: 12px;
+            --transition-fast: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* RESET E RESET MODERNO */
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: var(--transition-smooth); }
+        /* Configuração do Modo Claro (White) disparado pelo atributo data-theme */
+        [data-theme="light"] {
+            --bg-main: #f5f5f7;
+            --bg-surface: #ffffff;
+            --bg-card: #fafafa;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --text-primary: #111111;
+            --text-secondary: #555555;
+            --text-muted: #999999;
+            --accent-color: #111111;
+            --accent-inverse: #ffffff;
+            --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ==========================================================================
+           RESETS E ESTILOS GERAIS
+           ========================================================================== */
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
-            /* Fundo gradiente sutil */
-            background-image: 
-                radial-gradient(circle at 10% 10%, var(--ultra-purple-glow) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, var(--electric-green-glow) 0%, transparent 40%);
+            letter-spacing: -0.2px;
         }
 
-        /* HEADER MINIMALISTA FLUTUANTE */
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ==========================================================================
+           BARRA DE NAVEGAÇÃO (HEADER)
+           ========================================================================== */
         .navbar {
-            width: calc(100% - 48px);
-            max-width: 1300px;
-            margin: 24px auto;
-            background: var(--bg-panel);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 99px;
-            border: 1px solid var(--border-light);
-            padding: 14px 32px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: sticky;
-            top: 24px;
-            z-index: 1000;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            height: 80px;
         }
+
         .nav-logo {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: -1.5px;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-links { display: flex; gap: 32px; }
-        .nav-links a {
-            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: -1px;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            opacity: 0.7;
-            letter-spacing: 0.5px;
+            color: var(--text-primary);
         }
-        .nav-links a:hover { opacity: 1; color: var(--electric-green); }
-        .nav-links a.active { opacity: 1; border-bottom: 2px solid var(--electric-green); padding-bottom: 4px; }
 
-        /* AREA DE TRABALHO IMERSIVA (STUDIO VIEW) */
-        .studio-layout {
-            flex: 1;
+        .nav-logo span {
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        .nav-menu {
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 40px 24px 80px;
-            max-width: 1400px;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        /* Botão de alternar tema (Dark/White) */
+        .theme-toggle-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--text-primary);
+            color: var(--accent-inverse);
+        }
+
+        /* ==========================================================================
+           SEÇÃO HERO (INTRODUÇÃO)
+           ========================================================================== */
+        .hero {
+            padding: 60px 0 40px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
             margin: 0 auto;
-            width: 100%;
+            font-weight: 400;
+            line-height: 1.5;
         }
 
-        .studio-panel {
-            background: var(--bg-panel);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-light);
-            box-shadow: var(--shadow-panel);
+        /* ==========================================================================
+           ESTÚDIO DE CUSTOMIZAÇÃO (GRID PRINCIPAL)
+           ========================================================================== */
+        .studio-grid {
             display: grid;
-            grid-template-columns: 1fr 380px; /* Canvas gigante à esquerda, controles à direita */
-            overflow: hidden;
-            width: 100%;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            margin: 20px 0 80px 0;
+            align-items: start;
         }
 
-        /* ÁREA DO CANVAS (ESQUERDA) */
-        .canvas-stage {
-            padding: 60px;
+        /* Área da esquerda: Onde fica o Preview do Card */
+        .preview-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-main);
+            padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border-right: 1px solid var(--border-light);
-            position: relative;
+            box-shadow: var(--shadow-premium);
         }
-        .studio-header {
-            text-align: center;
-            margin-bottom: 48px;
-            max-width: 500px;
-        }
-        .studio-header h1 {
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 1.1;
-            margin-bottom: 12px;
-            background: linear-gradient(180deg, #fff 0%, #aaa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .studio-header p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
 
-        .canvas-wrapper {
+        .canvas-container {
             width: 100%;
-            max-width: 360px; /* Proporção 9:16 vertical */
+            max-width: 340px;
             aspect-ratio: 9/16;
-            background: #000;
-            border-radius: var(--radius-md);
+            background: #000000;
+            border-radius: 4px;
             overflow: hidden;
-            border: 2px solid var(--border-neon);
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
             position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
         }
-        canvas { width: 100%; height: 100%; display: block; object-fit: cover; }
 
-        .placeholder-state {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: #0a0e17; color: var(--text-muted);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 20px; padding: 40px; text-align: center; z-index: 10;
-        }
-        .placeholder-state svg { width: 50px; height: 50px; opacity: 0.2; color: var(--ultra-purple); }
-        .placeholder-state p { font-size: 14px; font-weight: 500; line-height: 1.5; }
-
-        /* ÁREA DE CONTROLES FLUTUANTES (DIREITA) */
-        .control-panel {
-            padding: 50px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-        .control-panel h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; border-left: 3px solid var(--electric-green); padding-left: 12px; }
-
-        .upload-action {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            padding: 30px;
-            border-radius: var(--radius-md);
-            text-align: center;
-            cursor: pointer;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-        }
-        .upload-action:hover { border-color: var(--electric-green); background: rgba(0, 255, 136, 0.02); }
-        .upload-action svg { width: 32px; height: 32px; color: var(--electric-green); margin-bottom: 16px; }
-        .upload-action p { font-size: 13px; font-weight: 700; color: var(--text-main); }
-        .upload-action span { font-size: 11px; color: var(--text-muted); display: block; margin-top: 4px; }
-
-        .tools-group {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .tool-item { position: relative; }
-        .tool-label { display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .tool-label label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
-        .tool-value { font-size: 11px; font-weight: 700; color: var(--electric-green); font-family: monospace; }
-
-        /* Custom Slider */
-        input[type="range"] {
-            -webkit-appearance: none; width: 100%; height: 4px; background: rgba(255, 255, 255, 0.05); border-radius: 99px; outline: none;
-        }
-        input[type="range"]::-webkit-slider-runnable-track {
-            background: linear-gradient(to right, var(--electric-green) var(--range-progress, 0%), rgba(255, 255, 255, 0.05) var(--range-progress, 0%));
-            height: 4px; border-radius: 99px;
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #fff; cursor: pointer; margin-top: -6px;
-            box-shadow: 0 0 10px var(--electric-green-glow); border: 2px solid var(--electric-green);
-        }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); box-shadow: 0 0 15px var(--electric-green); }
-
-        /* Botão de Ação Minimalista com Glow */
-        .btn-download {
+        canvas {
             width: 100%;
-            background: var(--gradient-primary);
-            color: #000;
-            border: none;
-            padding: 18px;
-            border-radius: var(--radius-md);
+            height: 100%;
+            display: block;
+        }
+
+        /* Tela de aviso antes do upload */
+        .upload-placeholder {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #111111;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 30px;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .upload-placeholder svg {
+            width: 40px;
+            height: 40px;
+            stroke-width: 1px;
+            opacity: 0.5;
+        }
+
+        /* Área da direita: Painel de Controle de ferramentas */
+        .controls-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-main);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            box-shadow: var(--shadow-premium);
+        }
+
+        .section-title {
             font-size: 14px;
             font-weight: 800;
-            cursor: pointer;
-            margin-top: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 10px 30px -5px var(--electric-green-glow);
-            position: relative;
-            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 12px;
         }
-        .btn-download:hover { transform: translateY(-3px); box-shadow: 0 15px 40px -5px var(--electric-green); }
-        .btn-download::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: rgba(255, 255, 255, 0.1); transform: rotate(45deg); transition: var(--transition-smooth);
-        }
-        .btn-download:hover::after { left: 120%; }
 
-        /* SEÇÃO DE GALERIA RETRÔ-FUTURISTA ("LENDAS") */
-        .legends-gallery {
-            max-width: 1300px;
-            margin: 0 auto 100px;
-            width: 100%;
-            padding: 0 24px;
-        }
-        .legends-gallery h3 {
-            font-size: 22px;
-            font-weight: 900;
+        /* Botão Elegante de Upload */
+        .action-upload-zone {
+            border: 1px dashed var(--border-color);
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: var(--radius-main);
             text-align: center;
-            margin-bottom: 40px;
-            letter-spacing: -1px;
-            text-transform: lowercase;
+            cursor: pointer;
         }
-        .legends-gallery h3 span { color: var(--electric-green); }
 
-        .gallery-grid {
+        .action-upload-zone:hover {
+            border-color: var(--text-primary);
+        }
+
+        .action-upload-zone p {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Sliders de Ajuste Customizados */
+        .tool-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tool-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .tool-value {
+            font-family: monospace;
+            color: var(--text-primary);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 2px;
+            background: var(--border-color);
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Botão de Download Principal */
+        .btn-download-main {
+            background: var(--accent-color);
+            color: var(--accent-inverse);
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-main);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-download-main:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* ==========================================================================
+           SEÇÃO DE REGISTROS ANTERIORES (GALERIA)
+           ========================================================================== */
+        .history-section {
+            border-top: 1px solid var(--border-color);
+            padding: 60px 0 100px 0;
+        }
+
+        .history-section h2 {
+            font-size: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .history-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
         }
-        .gallery-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius-md);
+
+        /* Cards de Eventos anteriores */
+        .history-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-main);
             overflow: hidden;
-            position: relative;
-            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
-        .gallery-item:hover { transform: translateY(-8px) scale(1.02); border-color: var(--ultra-purple-glow); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        
-        .gallery-image-mask {
+
+        .history-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--text-primary);
+        }
+
+        .card-cover {
             width: 100%;
             aspect-ratio: 16/10;
-            background: #10141f;
+            background: #111111;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--ultra-purple);
-            font-weight: 900;
-            font-size: 16px;
-            letter-spacing: -0.5px;
-            position: relative;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
         }
-        /* Efeito de Duotone/Filtro de cor */
-        .gallery-image-mask::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(8, 10, 16, 0.8); background-blend-mode: multiply;
-            border-bottom: 1px solid var(--border-light);
-        }
-        .gallery-item:hover .gallery-image-mask::after { background: transparent; }
 
-        .gallery-text { padding: 20px; }
-        .gallery-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-        .gallery-text p { font-size: 12px; color: var(--text-muted); }
-
-        /* RESPONSIVIDADE ADAPTATIVA */
-        @media (max-width: 1100px) {
-            .studio-panel { grid-template-columns: 1fr; }
-            .canvas-stage { border-right: none; border-bottom: 1px solid var(--border-light); padding: 50px 30px; }
-            .control-panel { padding: 40px; }
+        .card-body {
+            padding: 20px;
         }
-        @media (max-width: 768px) {
-            .navbar { width: calc(100% - 24px); margin: 12px auto; padding: 12px 20px; }
-            .nav-links { display: none; } /* Oculta links no mobile para simplificar */
-            .studio-header h1 { font-size: 28px; }
-            .canvas-stage { padding: 40px 20px; }
-            .canvas-wrapper { max-width: 280px; }
-            .gallery-grid { grid-template-columns: 1fr; }
+
+        .card-body h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-body p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* ==========================================================================
+           RODAPÉ DA PÁGINA (FOOTER)
+           ========================================================================== */
+        .footer {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            margin-top: auto;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ==========================================================================
+           BOTÃO FLUTUANTE DO WHATSAPP
+           ========================================================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background-color: var(--whatsapp-green);
+            color: white;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 28px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* ==========================================================================
+           RESPONSIVIDADE (MOBILE ADAPTATION)
+           ========================================================================== */
+        @media (max-width: 968px) {
+            .studio-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none; /* Simplificação mobile */
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- HEADER MINIMALISTA FLUTUANTE -->
-<nav class="navbar">
-    <div class="nav-logo">euvou.studio</div>
-    <div class="nav-links">
-        <a href="#" class="active">Criar Card</a>
-        <a href="#">Galeria</a>
-        <a href="#">Suporte</a>
-    </div>
-</nav>
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <!-- Link da logo direcionando para a Home -->
+            <a href="index.html" class="nav-logo">fotos<span>scuderia</span></a>
+            
+            <!-- Menu de links funcionais para navegação interna -->
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Criar Card</a></li>
+                <li><a href="galeria.html" class="nav-link">Todas as Corridas</a></li>
+                <li><a href="precos.html" class="nav-link">Preços</a></li>
+                <li><a href="sobre.html" class="nav-link">Sobre Nós</a></li>
+            </ul>
 
-<!-- AREA DE TRABALHO IMERSIVA -->
-<main class="studio-layout">
-    <div class="studio-panel">
+            <!-- Acionador do Dark / White Mode -->
+            <button class="theme-toggle-btn" id="themeBtn">Modo Claro</button>
+        </div>
+    </nav>
+
+    <!-- INTRODUÇÃO DA PÁGINA -->
+    <header class="hero container">
+        <h1>VIII Pedalada Santa Luzia</h1>
+        <p>Enquadre sua foto de atleta perfeitamente na moldura oficial e exporte em resolução máxima para suas redes.</p>
+    </header>
+
+    <!-- ESPAÇO DO ESTÚDIO DIGITAL -->
+    <main class="container studio-grid">
         
-        <!-- ESTÁGIO DO CANVAS -->
-        <section class="canvas-stage">
-            <header class="studio-header">
-                <h1>viii pedalada santa luzia</h1>
-                <p>O estúdio digital para criar seu card oficial de confirmação com qualidade premium e visual Cyber-Sport.</p>
-            </header>
-
-            <div class="canvas-wrapper">
-                <div class="placeholder-state" id="placeholder">
+        <!-- VISUALIZAÇÃO DO CARD (PREVIEW) -->
+        <section class="preview-box">
+            <div class="canvas-container">
+                <!-- Estado inicial antes de colocar a foto -->
+                <div class="upload-placeholder" id="placeholder">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"></path>
                     </svg>
-                    <p>Faça o upload da sua foto de atleta para iniciar a renderização no estúdio...</p>
+                    <p>Importe sua foto para iniciar a edição profissional</p>
                 </div>
+                <!-- Elemento real que processará as fotos em altíssima definição -->
                 <canvas id="mainCanvas"></canvas>
             </div>
         </section>
 
-        <!-- PAINEL DE CONTROLES -->
-        <aside class="control-panel">
-            <h2>Ferramentas de Edição</h2>
+        <!-- PAINEL DE CONTROLES E AJUSTES -->
+        <aside class="controls-box">
+            <h2 class="section-title">Ajustes Básicos</h2>
 
-            <div class="upload-action" onclick="document.getElementById('fileInput').click()">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                </svg>
-                <p>Importar Foto do Atleta</p>
-                <span>Formatos suportados: PNG, JPG, WEBP</span>
+            <!-- Clique para Upload -->
+            <div class="action-upload-zone" onclick="document.getElementById('fileInput').click()">
+                <p>Selecionar Foto do Dispositivo</p>
             </div>
+            <!-- Input oculto manipulado via JS -->
             <input type="file" id="fileInput" accept="image/*" style="display:none">
 
-            <div class="tools-group">
-                <div class="tool-item">
-                    <div class="tool-label">
-                        <label for="zoom">Escala (Zoom)</label>
-                        <span class="tool-value" id="val-zoom">100%</span>
-                    </div>
-                    <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1.0">
+            <!-- Grupo de Sliders -->
+            <div class="tool-row">
+                <div class="tool-info">
+                    <label for="zoom">Zoom da Imagem</label>
+                    <span class="tool-value" id="val-zoom">100%</span>
                 </div>
-                <div class="tool-item">
-                    <div class="tool-label">
-                        <label for="posX">Posição X (Horizontal)</label>
-                        <span class="tool-value" id="val-posX">0px</span>
-                    </div>
-                    <input type="range" id="posX" min="-400" max="400" value="0">
-                </div>
-                <div class="tool-item">
-                    <div class="tool-label">
-                        <label for="posY">Posição Y (Vertical)</label>
-                        <span class="tool-value" id="val-posY">0px</span>
-                    </div>
-                    <input type="range" id="posY" min="-400" max="400" value="0">
-                </div>
+                <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1.0">
             </div>
 
-            <button class="btn-download" id="btnDownload">
-                <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                Finalizar e Baixar Card Ultra-HD
-            </button>
+            <div class="tool-row">
+                <div class="tool-info">
+                    <label for="posX">Posição X (Horizontal)</label>
+                    <span class="tool-value" id="val-posX">0px</span>
+                </div>
+                <input type="range" id="posX" min="-400" max="400" value="0">
+            </div>
+
+            <div class="tool-row">
+                <div class="tool-info">
+                    <label for="posY">Posição Y (Vertical)</label>
+                    <span class="tool-value" id="val-posY">0px</span>
+                </div>
+                <input type="range" id="posY" min="-400" max="400" value="0">
+            </div>
+
+            <!-- Botão de Download Final -->
+            <button class="btn-download-main" id="btnDownload">Exportar Card PNG</button>
         </aside>
 
-    </div>
-</main>
+    </main>
 
-<!-- SEÇÃO GALERIA DE LENDAS (Edições Anteriores com Estética Retrô-Futurista) -->
-<section class="legends-gallery">
-    <h3>galeria de <span>lendas</span></h3>
-    <div class="gallery-grid">
-        <div class="gallery-item">
-            <div class="gallery-image-mask" style="background-image: linear-gradient(135deg, #111c24 0%, #080a10 100%); color: #00ff88; text-shadow: 0 0 10px #00ff88;">IMPERADOR</div>
-            <div class="gallery-text">
-                <h4>Imperador Race '26</h4>
-                <p>Pedro II, Piauí</p>
+    <!-- SEÇÃO DE CORRIDAS ANTERIORES (REGISTROS) -->
+    <section class="container history-section">
+        <h2>Corridas Anteriores Disponíveis</h2>
+        <div class="history-grid">
+            
+            <!-- Card de Corrida 1 -->
+            <a href="evento-imperador.html" class="history-card">
+                <div class="card-cover" style="background: #0f141d;">Imperador</div>
+                <div class="card-body">
+                    <h3>Imperador Race 2026</h3>
+                    <p>Pedro II, PI • Ver Fotos</p>
+                </div>
+            </a>
+
+            <!-- Card de Corrida 2 -->
+            <a href="evento-tabajaras.html" class="history-card">
+                <div class="card-cover" style="background: #1c150c;">Tabajaras</div>
+                <div class="card-body">
+                    <h3>XCO Tabajaras 2026</h3>
+                    <p>Parque Nacional • Ver Fotos</p>
+                </div>
+            </a>
+
+            <!-- Card de Corrida 3 -->
+            <a href="evento-zazas.html" class="history-card">
+                <div class="card-cover" style="background: #140d1a;">Zaza's</div>
+                <div class="card-body">
+                    <h3>2° Zaza's Run</h3>
+                    <p>Guaraciaba do Norte, CE • Ver Fotos</p>
+                </div>
+            </a>
+
+            <!-- Card de Corrida 4 -->
+            <a href="evento-mtb.html" class="history-card">
+                <div class="card-cover" style="background: #1a120d;">085 MTB</div>
+                <div class="card-body">
+                    <h3>085 MTB Fest 2026</h3>
+                    <p>Aquiraz, CE • Ver Fotos</p>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- RODAPÉ DA PÁGINA -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <p>&copy; 2026 fotoscuderia. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="termos.html">Termos de Uso</a>
+                <a href="privacidade.html">Privacidade</a>
             </div>
         </div>
-        <div class="gallery-item">
-            <div class="gallery-image-mask" style="background-image: linear-gradient(135deg, #2a1b0a 0%, #080a10 100%); color: #f39c12; text-shadow: 0 0 10px #f39c12;">TABAJARAS</div>
-            <div class="gallery-text">
-                <h4>XCO Tabajaras '26</h4>
-                <p>Parque Nacional</p>
-            </div>
-        </div>
-        <div class="gallery-item">
-            <div class="gallery-image-mask" style="background-image: linear-gradient(135deg, #1a0a24 0%, #080a10 100%); color: #8800ff; text-shadow: 0 0 10px #8800ff;">ZAZA'S RUN</div>
-            <div class="gallery-text">
-                <h4>2° Zaza's Run</h4>
-                <p>Guaraciaba (CE)</p>
-            </div>
-        </div>
-        <div class="gallery-item">
-            <div class="gallery-image-mask" style="background-image: linear-gradient(135deg, #24140a 0%, #080a10 100%); color: #e67e22; text-shadow: 0 0 10px #e67e22;">085 MTB</div>
-            <div class="gallery-text">
-                <h4>085 MTB Fest '26</h4>
-                <p>Aquiraz (CE)</p>
-            </div>
-        </div>
-    </div>
-</section>
+    </footer>
 
-<script>
-    /* LÓGICA DO CANVAS E RENDERIZAÇÃO (Mantida do original, apenas otimizada) */
-    const canvas = document.getElementById('mainCanvas');
-    const ctx = canvas.getContext('2d');
-    const imgMoldura = new Image();
-    const imgAtleta = new Image();
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP -->
+    <!-- Substitua o '5500999999999' pelo seu número de telefone real com DDD -->
+    <a href="https://wa.me/5500999999999?text=Olá!%20Preciso%20de%20suporte%20com%20meu%20card%20no%20FotosCuderia." class="whatsapp-float" target="_blank" rel="noopener noreferrer" title="Fale Conosco no WhatsApp">
+        <svg viewBox="0 0 448 512">
+            <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+        </svg>
+    </a>
 
-    // Resolução nativa do card (HD vertical)
-    const W = 1080, H = 1920;
-    // Área de corte arredondada dentro da moldura
-    const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
-    // Escala de exportação para qualidade Ultra-HD
-    const qualityScale = 3.0; 
-
-    let molduraCarregada = false;
-    let atletaCarregado = false;
-
-    // Configura tamanho interno do canvas para alta densidade de pixels
-    canvas.width = W * qualityScale;
-    canvas.height = H * qualityScale;
-    ctx.scale(qualityScale, qualityScale); // Escala o contexto para desenhar em HD
-
-    // Carrega a moldura padrão
-    imgMoldura.onload = () => { molduraCarregada = true; render(); };
-    imgMoldura.src = 'euvou.jpg'; // Substitua pelo caminho real da sua moldura
-
-    // Lógica de Upload de Imagem
-    document.getElementById('fileInput').onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (f) => {
-                imgAtleta.onload = () => {
-                    atletaCarregado = true;
-                    // Esconde placeholder
-                    document.getElementById('placeholder').style.display = 'none';
-                    render();
-                };
-                imgAtleta.src = f.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    // Atualização Dinâmica dos Sliders e Rastreio de Progresso (CSS)
-    const sliders = ['zoom', 'posX', 'posY'];
-    sliders.forEach(id => {
-        const slider = document.getElementById(id);
-        const valueDisplay = document.getElementById(`val-${id}`);
-        
-        const updateSlider = () => {
-            // Atualiza texto do valor
-            if (id === 'zoom') {
-                valueDisplay.innerText = Math.round(slider.value * 100) + '%';
+    <!-- LÓGICA EM JAVASCRIPT -->
+    <script>
+        /* ==========================================================================
+           CONTROLE DO TEMA DE COR (DARK / WHITE)
+           ========================================================================== */
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.onclick = () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                themeBtn.innerText = 'Modo Claro';
             } else {
-                valueDisplay.innerText = slider.value + 'px';
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerText = 'Modo Escuro';
             }
-            
-            // Atualiza progresso visual no track (CSS Variable)
-            const ratio = (slider.value - slider.min) / (slider.max - slider.min);
-            slider.style.setProperty('--range-progress', (ratio * 100) + '%');
-            
-            render();
         };
 
-        slider.oninput = updateSlider;
-        updateSlider(); // Inicializa
-    });
+        /* ==========================================================================
+           LOGICA DE MANIPULAÇÃO DO CANVAS E ENQUADRAMENTO DA FOTO
+           ========================================================================== */
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const imgMoldura = new Image();
+        const imgAtleta = new Image();
 
-    // Função de Renderização Principal
-    function render() {
-        ctx.clearRect(0, 0, W, H);
-        
-        // Ativa suavização de imagem de alta qualidade
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
+        // Resolução 4K base para garantir impressão e compartilhamento perfeitos
+        const W = 1080, H = 1920;
+        // Área demarcada do furo interno da moldura
+        const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
+        // Fator multiplicador de nitidez
+        const qualityScale = 2.5; 
 
-        // 1. Desenha a Moldura de Fundo
-        if (molduraCarregada) {
-            ctx.drawImage(imgMoldura, 0, 0, W, H);
-        } else {
-            // Fundo de segurança caso a moldura falhe
-            ctx.fillStyle = "#111827";
-            ctx.fillRect(0, 0, W, H);
+        let molduraCarregada = false;
+        let atletaCarregado = false;
+
+        // Setup do tamanho físico do Canvas
+        canvas.width = W * qualityScale;
+        canvas.height = H * qualityScale;
+        ctx.scale(qualityScale, qualityScale);
+
+        // Pré-carrega a imagem base da moldura
+        imgMoldura.onload = () => { molduraCarregada = true; render(); };
+        imgMoldura.src = 'euvou.jpg'; 
+
+        // Escuta e processa o upload do arquivo do Atleta
+        document.getElementById('fileInput').onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (f) => {
+                    imgAtleta.onload = () => {
+                        atletaCarregado = true;
+                        document.getElementById('placeholder').style.display = 'none';
+                        render();
+                    };
+                    imgAtleta.src = f.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // Vincula sliders para recalcular e renderizar dinamicamente as posições
+        const sliders = ['zoom', 'posX', 'posY'];
+        sliders.forEach(id => {
+            document.getElementById(id).oninput = () => {
+                if (id === 'zoom') {
+                    document.getElementById('val-zoom').innerText = Math.round(document.getElementById(id).value * 100) + '%';
+                } else {
+                    document.getElementById(`val-${id}`).innerText = document.getElementById(id).value + 'px';
+                }
+                render();
+            };
+        });
+
+        // Mecanismo principal de pintura em tela
+        function render() {
+            ctx.clearRect(0, 0, W, H);
+            
+            // Ativa suavização máxima de pixel para evitar borrões
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            // 1. Desenha a moldura de cobertura primeiro
+            if (molduraCarregada) ctx.drawImage(imgMoldura, 0, 0, W, H);
+
+            // 2. Executa a inserção e máscara de recorte da foto do usuário
+            if (atletaCarregado && imgAtleta.src) {
+                ctx.save();
+                ctx.beginPath();
+                
+                // Suporte para bordas arredondadas da caixa de corte
+                if (ctx.roundRect) {
+                    ctx.roundRect(area.x, area.y, area.w, area.h, area.r);
+                } else {
+                    ctx.rect(area.x, area.y, area.w, area.h);
+                }
+                ctx.clip();
+                
+                const z = parseFloat(document.getElementById('zoom').value);
+                const px = parseInt(document.getElementById('posX').value);
+                const py = parseInt(document.getElementById('posY').value);
+                const aspect = imgAtleta.width / imgAtleta.height;
+                
+                let drawW = area.w * z;
+                let drawH = (area.w / aspect) * z;
+                if (drawH < area.h * z) {
+                    drawH = area.h * z;
+                    drawW = (area.h * aspect) * z;
+                }
+                
+                ctx.drawImage(imgAtleta, area.x + (area.w - drawW) / 2 + px, area.y + (area.h - drawH) / 2 + py, drawW, drawH);
+                ctx.restore();
+            }
         }
 
-        // 2. Desenha o Atleta com Recorte Arredondado
-        if (atletaCarregado && imgAtleta.src) {
-            ctx.save();
-            
-            // Cria o caminho de recorte (Rounded Rectangle)
-            ctx.beginPath();
-            if (ctx.roundRect) {
-                // Navegadores modernos
-                ctx.roundRect(area.x, area.y, area.w, area.h, area.r);
-            } else {
-                // Fallback para navegadores antigos
-                ctx.rect(area.x, area.y, area.w, area.h);
-            }
-            ctx.clip(); // Aplica o recorte
-            
-            // Pega valores dos controles
-            const z = parseFloat(document.getElementById('zoom').value);
-            const px = parseInt(document.getElementById('posX').value);
-            const py = parseInt(document.getElementById('posY').value);
-            
-            // Calcula escala "aspect-fill" (cobre a área sem distorcer)
-            const aspect = imgAtleta.width / imgAtleta.height;
-            let drawW = area.w * z;
-            let drawH = (area.w / aspect) * z;
-            
-            if (drawH < area.h * z) {
-                drawH = area.h * z;
-                drawW = (area.h * aspect) * z;
-            }
-            
-            // Desenha imagem centralizada com offsets
-            ctx.drawImage(imgAtleta, 
-                area.x + (area.w - drawW) / 2 + px, 
-                area.y + (area.h - drawH) / 2 + py, 
-                drawW, drawH
-            );
-            
-            ctx.restore(); // Restaura contexto (remove recorte)
-        }
-    }
-
-    // Lógica de Download de Alta Qualidade
-    document.getElementById('btnDownload').onclick = () => {
-        if (!atletaCarregado) return alert("Por favor, adicione sua foto de atleta antes de exportar!");
-        
-        const link = document.createElement('a');
-        link.download = 'Pedalada_SantaLuzia_Card_Oficial.png';
-        // Exporta em qualidade máxima (1.0)
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.click();
-    };
-</script>
-
+        // Aciona o salvamento da imagem gerada diretamente no computador do usuário
+        document.getElementById('btnDownload').onclick = () => {
+            if (!atletaCarregado) return alert("Por favor, selecione uma foto antes de fazer o download!");
+            const link = document.createElement('a');
+            link.download = 'fotoscuderia_card_oficial.png';
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        };
+    </script>
 </body>
 </html>
