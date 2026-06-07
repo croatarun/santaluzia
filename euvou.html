@@ -137,4 +137,34 @@
         ctx.textAlign = 'center';
         if (nome) {
             // Posicionado centralizado logo abaixo do título "VIII PEDALADA..."
-            ctx.font = "900 8
+            ctx.font = "900 80px 'Montserrat'";
+            ctx.fillStyle = "#000000"; 
+            ctx.fillText(nome, W / 2, 1430);
+        }
+    }
+
+    function drawRoundedRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+    }
+
+    document.getElementById('btnDownload').onclick = () => {
+        if (!imgAtleta.src) return alert("Selecione sua foto primeiro!");
+        const link = document.createElement('a');
+        link.download = 'Pedalada_Santa_Luzia.png';
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+    };
+</script>
+
+</body>
+</html>
