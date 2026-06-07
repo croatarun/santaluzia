@@ -130,7 +130,7 @@
     <div class="controls">
         <div class="control-group">
             <label>Zoom da Foto</label>
-            <input type="range" id="zoom" min="0.1" max="4" step="0.01" value="1.2">
+            <input type="range" id="zoom" min="0.1" max="4" step="0.01" value="1.0">
         </div>
         
         <div class="control-group">
@@ -160,6 +160,7 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
+    // Dimensões exatas obtidas a partir de "image_58a861.jpg"
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 3; 
 
@@ -170,16 +171,16 @@
     canvas.height = H * qualityScale;
     ctx.scale(qualityScale, qualityScale);
 
-    // Carrega a moldura. Se falhar, avisa no console mas NÃO trava o script
     imgMoldura.onload = () => {
         molduraCarregada = true;
         render();
     };
     imgMoldura.onerror = () => {
-        console.log("Aviso: Arquivo 'euvou.png' não encontrado. Mostrando apenas a foto selecionada.");
+        console.log("Erro ao carregar moldura base.");
         render();
     };
-    imgMoldura.src = 'euvou.jpg'; 
+    // Tenta carregar como .png ou muda para .jpg se necessário
+    imgMoldura.src = 'euvou.png'; 
 
     document.getElementById('fileInput').onchange = (e) => {
         const file = e.target.files[0];
@@ -207,7 +208,7 @@
     function resetPos() {
         document.getElementById('posX').value = 0;
         document.getElementById('posY').value = 0;
-        document.getElementById('zoom').value = 1.2;
+        document.getElementById('zoom').value = 1.0;
         render();
     }
 
@@ -216,17 +217,22 @@
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // Se a moldura falhar ou sumir, cria um fundo cinza claro para você ver onde a foto está sendo mexida
-        if (!molduraCarregada) {
+        // 1. MOLDURA EM SEGUNDO PLANO (Fundo definitivo)
+        if (molduraCarregada) {
+            ctx.drawImage(imgMoldura, 0, 0, W, H);
+        } else {
+            // Fundo padrão caso a imagem demore para responder localmente
             ctx.fillStyle = "#e2e8f0";
             ctx.fillRect(0, 0, W, H);
         }
 
-        // 1. FOTO DO ATLETA (Renderiza de forma independente)
+        // 2. FOTO DO ATLETA EM PRIMEIRO PLANO (Por cima, mas restrita ao quadrado)
         if (atletaCarregado && imgAtleta.src) {
             ctx.save();
+            
+            // Cria a máscara exatamente em cima do espaço preto da moldura original
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
-            ctx.clip();
+            ctx.clip(); // Corta tudo o que estiver fora desse limite
             
             const z = parseFloat(document.getElementById('zoom').value);
             const px = parseInt(document.getElementById('posX').value);
@@ -241,24 +247,21 @@
                 drawW = (area.h * aspect) * z;
             }
             
+            // Desenha a foto por cima, limitada estritamente ao quadrado delimitado
             ctx.drawImage(imgAtleta, 
                 area.x + (area.w - drawW) / 2 + px, 
                 area.y + (area.h - drawH) / 2 + py, 
                 drawW, drawH
             );
+            
             ctx.restore();
-        } else {
-            // Se não tiver foto instalada, preenche o espaço com a cor preta padrão da sua moldura
+        } else if (!molduraCarregada) {
+            // Indicador visual preto se nada estiver carregado
             ctx.save();
             ctx.fillStyle = "#000000";
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
             ctx.fill();
             ctx.restore();
-        }
-
-        // 2. MOLDURA (Fica por cima, se estiver carregada na pasta)
-        if (molduraCarregada) {
-            ctx.drawImage(imgMoldura, 0, 0, W, H);
         }
     }
 
