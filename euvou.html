@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Santa Luzia - 8 Pedalada</title>
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Montserrat:wght=700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #2d5a27; --bg: #f8fafc; }
         body { font-family: 'Montserrat', sans-serif; background: var(--bg); display: flex; flex-direction: column; align-items: center; padding: 20px; margin: 0; }
@@ -63,7 +63,10 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
-    const area = { x: 124, y: 231, w: 832, h: 1046, r: 105 };
+    
+    // AJUSTADO: Coordenadas precisas baseadas na imagem enviada
+    // x: recuo esquerdo, y: topo, w: largura da área, h: altura da área, r: curvatura do canto
+    const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 3; 
 
     imgMoldura.src = 'euvou.jpg'; 
@@ -93,10 +96,7 @@
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. MOLDURA
-        ctx.drawImage(imgMoldura, 0, 0, W, H);
-
-        // 2. FOTO DO ATLETA COM AJUSTES X E Y
+        // 1. FOTO DO ATLETA (Renderizada primeiro para ficar atrás do brush da moldura se necessário)
         if (imgAtleta.src) {
             ctx.save();
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
@@ -110,7 +110,12 @@
             let drawW = area.w * z;
             let drawH = (area.w / aspect) * z;
             
-            // Centralização baseada nos inputs X e Y
+            // Caso a imagem seja muito horizontal, ajusta a proporção base pelo limite vertical
+            if (drawH < area.h * z) {
+                drawH = area.h * z;
+                drawW = (area.h * aspect) * z;
+            }
+            
             ctx.drawImage(imgAtleta, 
                 area.x + (area.w - drawW) / 2 + px, 
                 area.y + (area.h - drawH) / 2 + py, 
@@ -119,7 +124,10 @@
             ctx.restore();
         }
 
-        // 3. TEXTOS (NOME DO ATLETA)
+        // 2. MOLDURA (Por cima da foto)
+        ctx.drawImage(imgMoldura, 0, 0, W, H);
+
+        // 3. TEXTOS (Nome do Atleta)
         renderTextos();
     }
 
@@ -128,34 +136,5 @@
 
         ctx.textAlign = 'center';
         if (nome) {
-            ctx.font = "900 85px 'Montserrat'";
-            ctx.fillStyle = "#1a3a16";
-            ctx.fillText(nome, W / 2, 1365);
-        }
-    }
-
-    function drawRoundedRect(ctx, x, y, width, height, radius) {
-        ctx.beginPath();
-        ctx.moveTo(x + radius, y);
-        ctx.lineTo(x + width - radius, y);
-        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-        ctx.lineTo(x + width, y + height - radius);
-        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-        ctx.lineTo(x + radius, y + height);
-        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-        ctx.lineTo(x, y + radius);
-        ctx.quadraticCurveTo(x, y, x + radius, y);
-        ctx.closePath();
-    }
-
-    document.getElementById('btnDownload').onclick = () => {
-        if (!imgAtleta.src) return alert("Selecione sua foto primeiro!");
-        const link = document.createElement('a');
-        link.download = 'Pedalada_Santa_Luzia.png';
-        link.href = canvas.toDataURL('image/png', 1.0);
-        link.click();
-    };
-</script>
-
-</body>
-</html>
+            // Posicionado centralizado logo abaixo do título "VIII PEDALADA..."
+            ctx.font = "900 8
