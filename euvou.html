@@ -63,17 +63,20 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
-    
-    // AJUSTADO: Coordenadas precisas baseadas na imagem enviada
-    // x: recuo esquerdo, y: topo, w: largura da área, h: altura da área, r: curvatura do canto
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 3; 
 
+    // Controla se as imagens já terminaram de carregar na memória
+    let molduraCarregada = false;
+    let atletaCarregado = false;
+
+    canvas.width = W * qualityScale;
+    canvas.height = H * qualityScale;
+    ctx.scale(qualityScale, qualityScale);
+
     imgMoldura.src = 'euvou.jpg'; 
     imgMoldura.onload = () => {
-        canvas.width = W * qualityScale;
-        canvas.height = H * qualityScale;
-        ctx.scale(qualityScale, qualityScale);
+        molduraCarregada = true;
         render();
     };
 
@@ -83,7 +86,10 @@
             const reader = new FileReader();
             reader.onload = (f) => {
                 imgAtleta.src = f.target.result;
-                imgAtleta.onload = render;
+                imgAtleta.onload = () => {
+                    atletaCarregado = true;
+                    render();
+                };
             };
             reader.readAsDataURL(file);
         }
@@ -92,12 +98,13 @@
     document.querySelectorAll('input').forEach(input => input.oninput = render);
 
     function render() {
+        // Limpa o canvas para evitar ghosts
         ctx.clearRect(0, 0, W, H);
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. FOTO DO ATLETA (Renderizada primeiro para ficar atrás do brush da moldura se necessário)
-        if (imgAtleta.src) {
+        // 1. DESENHA A FOTO DO ATLETA (Fundo)
+        if (atletaCarregado) {
             ctx.save();
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
             ctx.clip();
@@ -110,7 +117,6 @@
             let drawW = area.w * z;
             let drawH = (area.w / aspect) * z;
             
-            // Caso a imagem seja muito horizontal, ajusta a proporção base pelo limite vertical
             if (drawH < area.h * z) {
                 drawH = area.h * z;
                 drawW = (area.h * aspect) * z;
@@ -122,21 +128,28 @@
                 drawW, drawH
             );
             ctx.restore();
+        } else {
+            // Caso não tenha foto ainda, preenche o espaço de preto para simular a moldura original
+            ctx.save();
+            ctx.fillStyle = "#000000";
+            drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
+            ctx.fill();
+            ctx.restore();
         }
 
-        // 2. MOLDURA (Por cima da foto)
-        ctx.drawImage(imgMoldura, 0, 0, W, H);
+        // 2. DESENHA A MOLDURA (Frente - cobrindo as bordas da foto)
+        if (molduraCarregada) {
+            ctx.drawImage(imgMoldura, 0, 0, W, H);
+        }
 
-        // 3. TEXTOS (Nome do Atleta)
+        // 3. DESENHA OS TEXTOS
         renderTextos();
     }
 
     function renderTextos() {
         const nome = document.getElementById('nomeAtleta').value.toUpperCase().trim();
-
         ctx.textAlign = 'center';
         if (nome) {
-            // Posicionado centralizado logo abaixo do título "VIII PEDALADA..."
             ctx.font = "900 80px 'Montserrat'";
             ctx.fillStyle = "#000000"; 
             ctx.fillText(nome, W / 2, 1430);
@@ -158,7 +171,7 @@
     }
 
     document.getElementById('btnDownload').onclick = () => {
-        if (!imgAtleta.src) return alert("Selecione sua foto primeiro!");
+        if (!atletaCarregado) return alert("Selecione sua foto primeiro!");
         const link = document.createElement('a');
         link.download = 'Pedalada_Santa_Luzia.png';
         link.href = canvas.toDataURL('image/png', 1.0);
