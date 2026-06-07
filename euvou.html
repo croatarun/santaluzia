@@ -66,7 +66,6 @@
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 3; 
 
-    // Controla se as imagens já terminaram de carregar na memória
     let molduraCarregada = false;
     let atletaCarregado = false;
 
@@ -74,9 +73,15 @@
     canvas.height = H * qualityScale;
     ctx.scale(qualityScale, qualityScale);
 
+    // ATENÇÃO: Se o nome do seu arquivo for diferente, mude aqui (Ex: 'image_58a861.jpg')
     imgMoldura.src = 'euvou.jpg'; 
+    
     imgMoldura.onload = () => {
         molduraCarregada = true;
+        render();
+    };
+    imgMoldura.onerror = () => {
+        console.log("Aviso: Imagem da moldura não encontrada localmente. Continuando sem ela.");
         render();
     };
 
@@ -87,7 +92,7 @@
             reader.onload = (f) => {
                 imgAtleta.src = f.target.result;
                 imgAtleta.onload = () => {
-                    atletaCarregado = true;
+                    atletaCarregada = true; // Força a ativação
                     render();
                 };
             };
@@ -98,13 +103,18 @@
     document.querySelectorAll('input').forEach(input => input.oninput = render);
 
     function render() {
-        // Limpa o canvas para evitar ghosts
         ctx.clearRect(0, 0, W, H);
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. DESENHA A FOTO DO ATLETA (Fundo)
-        if (atletaCarregado) {
+        // Se a moldura não carregou por erro de pasta, desenha um fundo cinza temporário para você ver a foto
+        if (!molduraCarregada) {
+            ctx.fillStyle = "#e2e8f0";
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        // 1. DESENHA A FOTO DO ATLETA
+        if (imgAtleta.src && imgAtleta.complete) {
             ctx.save();
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
             ctx.clip();
@@ -129,7 +139,7 @@
             );
             ctx.restore();
         } else {
-            // Caso não tenha foto ainda, preenche o espaço de preto para simular a moldura original
+            // Se não tem foto, deixa o espaço preto original da moldura
             ctx.save();
             ctx.fillStyle = "#000000";
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
@@ -137,12 +147,12 @@
             ctx.restore();
         }
 
-        // 2. DESENHA A MOLDURA (Frente - cobrindo as bordas da foto)
+        // 2. DESENHA A MOLDURA POR CIMA (Se ela estiver carregada)
         if (molduraCarregada) {
             ctx.drawImage(imgMoldura, 0, 0, W, H);
         }
 
-        // 3. DESENHA OS TEXTOS
+        // 3. TEXTOS
         renderTextos();
     }
 
@@ -171,7 +181,7 @@
     }
 
     document.getElementById('btnDownload').onclick = () => {
-        if (!atletaCarregado) return alert("Selecione sua foto primeiro!");
+        if (!imgAtleta.src) return alert("Selecione sua foto primeiro!");
         const link = document.createElement('a');
         link.download = 'Pedalada_Santa_Luzia.png';
         link.href = canvas.toDataURL('image/png', 1.0);
