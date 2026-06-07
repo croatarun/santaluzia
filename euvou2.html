@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIII Pedalada - Sports Card Creator</title>
+    <title>VIII Pedalada - Santa Luzia | Card Oficial</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #0b0f19;
-            --surface-base: #111827;
-            --surface-card: #1f2937;
-            --brand-glow: #10b981; /* Verde esmeralda esportivo */
-            --brand-hover: #059669;
+            --bg-main: #060913;
+            --surface-base: #0b1120;
+            --surface-card: #151f32;
+            --brand-glow: #10b981; 
+            --brand-hover: #34d399;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.06);
+            --border-color: rgba(255, 255, 255, 0.08);
             --radius-lg: 24px;
-            --radius-md: 14px;
+            --radius-md: 16px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,99 +25,175 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-main);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+                radial-gradient(circle at 0% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 24px;
+            padding: 24px 16px;
         }
 
-        /* Container Principal Premium */
-        .app-container {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            max-width: 1080px;
+        /* Container que centraliza o site no padrão das melhores plataformas */
+        .wrapper {
+            max-width: 1280px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Bloco de Banner de Publicidade Global */
+        .ad-placeholder {
+            background: rgba(11, 17, 32, 0.6);
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            overflow: hidden;
+        }
+        .ad-top { height: 90px; width: 100%; max-width: 728px; margin: 0 auto; }
+        .ad-sidebar { height: 600px; width: 100%; }
+        .ad-bottom { height: 90px; width: 100%; max-width: 970px; margin: 20px auto 0; }
+
+        /* Topo do Site */
+        header {
+            text-align: center;
+            max-width: 700px;
+            margin: 16px auto 8px;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: var(--brand-glow);
+            padding: 8px 16px;
+            border-radius: 99px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+        
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--brand-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--brand-glow);
+        }
+
+        header h1 {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #ffffff 40%, #a7f3d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Layout Grid Principal (Estilo Dashboard) */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .app-container {
+            background: rgba(11, 17, 32, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.6);
             display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
+            grid-template-columns: 1.2fr 1fr;
             overflow: hidden;
         }
 
-        /* Painel de Customização */
+        /* Sidebar de customização esquerda */
         .workspace-sidebar {
-            padding: 48px;
+            padding: 40px;
+            border-right: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
             justify-content: center;
-            border-right: 1px solid var(--border-color);
         }
 
         .header-area { margin-bottom: 32px; }
-        .header-area h1 { 
-            font-size: 28px; 
+        .header-area h2 { 
+            font-size: 22px; 
             font-weight: 800; 
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
-        .header-area p { font-size: 14px; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
+        .header-area p { font-size: 13px; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
 
-        /* Área Inteligente de Dropzone */
+        /* Área do Dropzone de fotos */
         .upload-zone {
             border: 2px dashed rgba(255, 255, 255, 0.15);
-            padding: 35px 24px;
+            padding: 40px 24px;
             border-radius: var(--radius-md);
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(31, 41, 55, 0.4);
-            margin-bottom: 28px;
-            position: relative;
+            transition: all 0.25s ease;
+            background: rgba(21, 31, 50, 0.4);
+            margin-bottom: 32px;
         }
         .upload-zone:hover { 
             border-color: var(--brand-glow); 
-            background: rgba(16, 185, 129, 0.04);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+            background: rgba(16, 185, 129, 0.03);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.08);
         }
-        .upload-zone svg { width: 36px; height: 36px; color: var(--brand-glow); margin-bottom: 12px; transition: transform 0.2s; }
-        .upload-zone:hover svg { transform: translateY(-3px); }
+        .upload-zone svg { width: 40px; height: 40px; color: var(--brand-glow); margin-bottom: 14px; transition: transform 0.2s ease; }
+        .upload-zone:hover svg { transform: translateY(-4px); }
         .upload-zone p { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-        .upload-zone span { font-size: 12px; color: var(--text-secondary); display: block; margin-top: 4px; }
+        .upload-zone span { font-size: 12px; color: var(--text-secondary); display: block; margin-top: 6px; }
 
-        /* Controles Deslizantes Inteligentes */
+        /* Controles Deslizantes */
         .control-card {
-            background: rgba(31, 41, 55, 0.6);
+            background: rgba(21, 31, 50, 0.5);
             padding: 24px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         .slider-wrapper { position: relative; }
-        
         .slider-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
-        .slider-header label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.75px; color: var(--text-secondary); }
+        .slider-header label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); }
         .slider-value { 
             font-size: 11px; 
             font-weight: 700; 
             color: var(--brand-glow); 
-            background: rgba(16, 185, 129, 0.15); 
-            padding: 3px 8px; 
+            background: rgba(16, 185, 129, 0.12); 
+            padding: 4px 10px; 
             border-radius: 6px; 
             border: 1px solid rgba(16, 185, 129, 0.2);
         }
@@ -126,77 +202,76 @@
             -webkit-appearance: none;
             width: 100%;
             height: 6px;
-            background: #374151;
+            background: #1f293d;
             border-radius: 99px;
             outline: none;
             cursor: pointer;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: var(--brand-glow);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
-            transition: transform 0.15s, background-color 0.15s;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+            transition: transform 0.1s, background-color 0.1s;
         }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); background-color: #34d399; }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.25); background-color: var(--brand-hover); }
 
         /* Painel de Preview à Direita */
         .preview-sidebar {
-            background: rgba(10, 15, 26, 0.4);
-            padding: 48px;
+            background: rgba(5, 8, 16, 0.4);
+            padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
 
         .canvas-container {
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             aspect-ratio: 9/16;
             border-radius: var(--radius-md);
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             background: #000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
         canvas { width: 100%; height: 100%; display: block; }
 
-        /* Estado Vazio Inteligente */
+        /* Estado Vazio */
         .placeholder-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: #111827;
+            background: #0b1120;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: var(--text-secondary);
-            gap: 12px;
+            gap: 16px;
             z-index: 10;
             transition: opacity 0.3s ease;
             pointer-events: none;
-            padding: 20px;
+            padding: 24px;
             text-align: center;
         }
-        .placeholder-overlay svg { width: 44px; height: 44px; opacity: 0.4; animation: pulse 2s infinite; }
-        .placeholder-overlay p { font-size: 13px; font-weight: 500; }
+        .placeholder-overlay svg { width: 48px; height: 48px; opacity: 0.3; animation: pulse 2s infinite ease-in-out; }
+        .placeholder-overlay p { font-size: 13px; font-weight: 500; line-height: 1.4; }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.4; }
-            50% { transform: scale(1.05); opacity: 0.8; }
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.06); opacity: 0.7; }
         }
 
-        /* Botão de Download */
+        /* Botão de Download Principal */
         .btn-action {
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             background: var(--brand-glow);
-            color: #042f1a;
+            color: #022c1a;
             border: none;
             padding: 16px;
             border-radius: var(--radius-md);
@@ -208,88 +283,168 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 10px 20px -3px rgba(16, 185, 129, 0.3);
-            transition: all 0.2s ease;
+            box-shadow: 0 12px 24px -4px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .btn-action:hover { background: #34d399; transform: translateY(-1px); box-shadow: 0 12px 24px -3px rgba(16, 185, 129, 0.4); }
+        .btn-action:hover { background: var(--brand-hover); transform: translateY(-2px); box-shadow: 0 16px 28px -4px rgba(16, 185, 129, 0.45); }
         .btn-action:active { transform: translateY(0); }
 
-        /* ADAPTAÇÃO PARA DISPOSITIVOS MÓVEIS (Celular) */
+        /* Grid de Parceiros / Patrocinadores Oficiais */
+        .partners-section {
+            background: rgba(11, 17, 32, 0.4);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            text-align: center;
+            margin-top: 12px;
+        }
+        .partners-section h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        .partners-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            opacity: 0.6;
+        }
+        .partners-logos span {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-secondary);
+            letter-spacing: -0.5px;
+        }
+
+        /* Responsividade Avançada */
+        @media (max-width: 1024px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .ad-sidebar { height: 120px; max-width: 728px; margin: 0 auto; }
+        }
+
         @media (max-width: 768px) {
-            body { padding: 12px; align-items: flex-start; }
-            .app-container { grid-template-columns: 1fr; border-radius: var(--radius-md); }
-            .workspace-sidebar { padding: 28px 20px; order: 2; border-right: none; }
-            .preview-sidebar { padding: 36px 20px; order: 1; border-bottom: 1px solid var(--border-color); }
-            .header-area { text-align: center; margin-bottom: 24px; }
-            .btn-action { max-width: 100%; margin-top: 18px; }
-            .canvas-container { max-width: 270px; }
+            body { padding: 16px 8px; }
+            header h1 { font-size: 32px; }
+            .app-container { grid-template-columns: 1fr; }
+            .workspace-sidebar { padding: 32px 20px; order: 2; border-right: none; }
+            .preview-sidebar { padding: 40px 20px; order: 1; border-bottom: 1px solid var(--border-color); }
+            .canvas-container { max-width: 260px; }
+            .partners-logos { gap: 24px; }
         }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    
-    <!-- CONTEÚDO E CONFIGURAÇÃO -->
-    <div class="workspace-sidebar">
-        <div class="header-area">
-            <h1>VIII Pedalada</h1>
-            <p>Monte seu story de confirmação personalizado</p>
-        </div>
+<div class="wrapper">
 
-        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-            </svg>
-            <p>Selecione sua melhor foto</p>
-            <span>Toque para abrir a galeria ou arquivos</span>
-        </div>
-        <input type="file" id="fileInput" accept="image/*" style="display:none">
-
-        <div class="control-card">
-            <div class="slider-wrapper">
-                <div class="slider-header">
-                    <label for="zoom">Escala da Imagem</label>
-                    <span class="slider-value" id="val-zoom">100%</span>
-                </div>
-                <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1.0">
-            </div>
-
-            <div class="slider-wrapper">
-                <div class="slider-header">
-                    <label for="posX">Deslocar Lateralmente</label>
-                    <span class="slider-value" id="val-posX">Eixo X</span>
-                </div>
-                <input type="range" id="posX" min="-400" max="400" value="0">
-            </div>
-
-            <div class="slider-wrapper">
-                <div class="slider-header">
-                    <label for="posY">Ajustar Altura</label>
-                    <span class="slider-value" id="val-posY">Eixo Y</span>
-                </div>
-                <input type="range" id="posY" min="-400" max="400" value="0">
-            </div>
-        </div>
+    <!-- PROPAGANDA TOPO -->
+    <div class="ad-placeholder ad-top">
+        <span>Publicidade - Espaço Reservado Google AdSense</span>
     </div>
 
-    <!-- PREVIEW PROFISSIONAL COM DETECTOR DE ESTADO -->
-    <div class="preview-sidebar">
-        <div class="canvas-container">
-            <!-- Camada Inteligente: Some automaticamente ao subir a imagem -->
-            <div class="placeholder-overlay" id="placeholder">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-                <p>Aguardando upload da foto...</p>
-            </div>
-            <canvas id="mainCanvas"></canvas>
+    <!-- CABEÇALHO DO EVENTO -->
+    <header>
+        <div class="badge">
+            <span class="badge-dot"></span> App Oficial Integrado
         </div>
-        <button class="btn-action" id="btnDownload">
-            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            Gerar e Baixar Card
-        </button>
+        <h1>VIII Pedalada Santa Luzia</h1>
+        <p>Prepare suas redes sociais para o maior evento de ciclismo da região. Carregue sua melhor foto abaixo, ajuste a escala e faça o download do seu card personalizado de confirmação.</p>
+    </header>
+
+    <!-- GRID CONTEÚDO + BANNER LATERAL -->
+    <div class="main-grid">
+        
+        <!-- APLICAÇÃO PRINCIPAL -->
+        <main class="app-container">
+            
+            <!-- CONTROLES -->
+            <section class="workspace-sidebar">
+                <div class="header-area">
+                    <h2>Configurações do Atleta</h2>
+                    <p>Faça o ajuste fino da imagem de fundo no enquadramento</p>
+                </div>
+
+                <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                    </svg>
+                    <p>Clique ou arraste sua foto</p>
+                    <span>Formatos suportados: PNG, JPG ou WEBP</span>
+                </div>
+                <input type="file" id="fileInput" accept="image/*" style="display:none">
+
+                <div class="control-card">
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <label for="zoom">Escala (Zoom)</label>
+                            <span class="slider-value" id="val-zoom">100%</span>
+                        </div>
+                        <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1.0">
+                    </div>
+
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <label for="posX">Posição Horizontal (Eixo X)</label>
+                            <span class="slider-value" id="val-posX">0px</span>
+                        </div>
+                        <input type="range" id="posX" min="-400" max="400" value="0">
+                    </div>
+
+                    <div class="slider-wrapper">
+                        <div class="slider-header">
+                            <label for="posY">Posição Vertical (Eixo Y)</label>
+                            <span class="slider-value" id="val-posY">0px</span>
+                        </div>
+                        <input type="range" id="posY" min="-400" max="400" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <!-- CANVAS / PREVIEW -->
+            <section class="preview-sidebar">
+                <div class="canvas-container">
+                    <div class="placeholder-overlay" id="placeholder">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        <p>Aguardando o envio da sua foto de ciclista para gerar a pré-visualização...</p>
+                    </div>
+                    <canvas id="mainCanvas"></canvas>
+                </div>
+                <button class="btn-action" id="btnDownload">
+                    <svg style="width:20px;height:20px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Gerar e Baixar Card
+                </button>
+            </section>
+
+        </main>
+
+        <!-- PROPAGANDA LATERAL (OU PATROCINADOR MASTER) -->
+        <aside class="ad-placeholder ad-sidebar">
+            <span>Anúncio / Patrocinador Master<br>[300x600 px]</span>
+        </aside>
+
+    </div>
+
+    <!-- SEÇÃO DE PATROCINADORES DO EVENTO -->
+    <footer class="partners-section">
+        <h3>Patrocínio Institucional Oferecido por</h3>
+        <div class="partners-logos">
+            <span>🚴 BikeShop Santa Luzia</span>
+            <span>⚡ Extreme Energy Drink</span>
+            <span>Alimentos Saudáveis S.A.</span>
+            <span>Prefeitura Municipal</span>
+        </div>
+    </footer>
+
+    <!-- PROPAGANDA INFERIOR -->
+    <div class="ad-placeholder ad-bottom">
+        <span>Publicidade de Rodapé - Espaço Reservado</span>
     </div>
 
 </div>
@@ -301,7 +456,6 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
-    // Coordenadas da caixa interna preta de corte obtidas através da base de imagem original
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 2.5; 
 
@@ -323,7 +477,6 @@
             reader.onload = (f) => {
                 imgAtleta.onload = () => {
                     atletaCarregado = true;
-                    // Remove a camada de placeholder de forma fluida
                     document.getElementById('placeholder').style.opacity = '0';
                     setTimeout(() => document.getElementById('placeholder').style.display = 'none', 300);
                     render();
@@ -334,7 +487,6 @@
         }
     };
 
-    // Controle dinâmico e tratamento de textos dos medidores
     const sliders = ['zoom', 'posX', 'posY'];
     sliders.forEach(id => {
         document.getElementById(id).oninput = () => {
@@ -353,7 +505,6 @@
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. Renderiza a moldura institucional em segundo plano
         if (molduraCarregada) {
             ctx.drawImage(imgMoldura, 0, 0, W, H);
         } else {
@@ -361,7 +512,6 @@
             ctx.fillRect(0, 0, W, H);
         }
 
-        // 2. Renderiza a imagem do ciclista com máscara vetorial cirúrgica
         if (atletaCarregado && imgAtleta.src) {
             ctx.save();
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
