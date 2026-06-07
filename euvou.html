@@ -3,154 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santa Luzia - Gerador de Story</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <title>VIII Pedalada - Sports Card Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --primary: #2d5a27; 
-            --primary-hover: #1f3f1b;
-            --bg: #f0f4f8; 
-            --card-bg: #ffffff;
+        :root {
+            --bg-main: #0b0f19;
+            --surface-base: #111827;
+            --surface-card: #1f2937;
+            --brand-glow: #10b981; /* Verde esmeralda esportivo */
+            --brand-hover: #059669;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --radius-lg: 24px;
+            --radius-md: 14px;
         }
-        body { 
-            font-family: 'Montserrat', sans-serif; 
-            background: var(--bg); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 20px; 
-            margin: 0; 
-            color: #1e293b;
-        }
-        .container { 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1); 
-            max-width: 440px; 
-            width: 100%; 
-            box-sizing: border-box;
-        }
-        h1 { 
-            font-size: 16px; 
-            text-align: center; 
-            color: var(--primary); 
-            letter-spacing: 1.5px; 
-            margin-top: 0;
-            margin-bottom: 20px; 
-            text-transform: uppercase; 
-            font-weight: 900;
-        }
-        .preview-box { 
-            width: 100%; 
-            aspect-ratio: 9/16; 
-            background: #e2e8f0; 
-            border-radius: 16px; 
-            overflow: hidden; 
-            border: 2px solid #cbd5e1; 
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
-        }
-        canvas { width: 100%; height: 100%; display: block; }
-        
-        .controls { 
-            margin-top: 20px; 
-            background: #f8fafc; 
-            padding: 15px; 
-            border-radius: 16px; 
-            border: 1px solid #e2e8f0;
-        }
-        
-        .control-group { margin-bottom: 15px; }
-        .control-group:last-child { margin-bottom: 0; }
-        
-        label { 
-            font-size: 11px; 
-            font-weight: 700; 
-            color: #64748b; 
-            text-transform: uppercase; 
-            display: block; 
-            margin-bottom: 6px; 
-            letter-spacing: 0.5px;
-        }
-        
-        input[type="range"] { width: 100%; height: 6px; accent-color: var(--primary); margin: 8px 0; cursor: pointer; }
-        
-        .dpad-container {
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            margin: 10px 0;
+            justify-content: center;
+            padding: 40px 24px;
         }
-        .dpad-row { display: flex; gap: 5px; }
-        .btn-pad {
-            background: #e2e8f0;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            font-weight: 900;
-            cursor: pointer;
-            user-select: none;
-            transition: 0.1s;
-        }
-        .btn-pad:active { background: #cbd5e1; transform: scale(0.95); }
 
-        .btn { 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 12px; 
-            border: none; 
-            font-weight: 900; 
-            font-size: 14px;
-            cursor: pointer; 
-            text-transform: uppercase; 
-            transition: background 0.2s, transform 0.1s; 
-            box-sizing: border-box;
+        /* Seção do Topo (Introdução Bacana) */
+        .intro-header {
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 40px;
         }
-        .btn:active { transform: scale(0.98); }
-        .btn-upload { background: #0f172a; color: white; margin-bottom: 15px; }
-        .btn-upload:hover { background: #1e293b; }
-        .btn-download { background: var(--primary); color: white; margin-top: 15px; box-shadow: 0 4px 12px rgba(45,90,39,0.2); }
-        .btn-download:hover { background: var(--primary-hover); }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: var(--brand-glow);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+        
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--brand-glow);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--brand-glow);
+        }
+
+        .intro-header h0 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .intro-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Container Principal Premium */
+        .app-container {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            max-width: 1080px;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            overflow: hidden;
+        }
+
+        /* Painel de Customização */
+        .workspace-sidebar {
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .header-area { margin-bottom: 32px; }
+        .header-area h1 { 
+            font-size: 24px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+            color: #ffffff;
+        }
+        .header-area p { font-size: 14px; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
+
+        /* Área Inteligente de Dropzone */
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            padding: 35px 24px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(31, 41, 55, 0.4);
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .upload-zone:hover { 
+            border-color: var(--brand-glow); 
+            background: rgba(16, 185, 129, 0.04);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+        .upload-zone svg { width: 36px; height: 36px; color: var(--brand-glow); margin-bottom: 12px; transition: transform 0.2s; }
+        .upload-zone:hover svg { transform: translateY(-3px); }
+        .upload-zone p { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+        .upload-zone span { font-size: 12px; color: var(--text-secondary); display: block; margin-top: 4px; }
+
+        /* Controles Deslizantes Inteligentes */
+        .control-card {
+            background: rgba(31, 41, 55, 0.6);
+            padding: 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .slider-wrapper { position: relative; }
+        
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .slider-header label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.75px; color: var(--text-secondary); }
+        .slider-value { 
+            font-size: 11px; 
+            font-weight: 700; 
+            color: var(--brand-glow); 
+            background: rgba(16, 185, 129, 0.15); 
+            padding: 3px 8px; 
+            border-radius: 6px; 
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #374151;
+            border-radius: 99px;
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--brand-glow);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            transition: transform 0.15s, background-color 0.15s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); background-color: #34d399; }
+
+        /* Painel de Preview à Direita */
+        .preview-sidebar {
+            background: rgba(10, 15, 26, 0.4);
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .canvas-container {
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 9/16;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+
+        /* Estado Vazio Inteligente */
+        .placeholder-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #111827;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            gap: 12px;
+            z-index: 10;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            padding: 20px;
+            text-align: center;
+        }
+        .placeholder-overlay svg { width: 44px; height: 44px; opacity: 0.4; animation: pulse 2s infinite; }
+        .placeholder-overlay p { font-size: 13px; font-weight: 500; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        /* Botão de Download */
+        .btn-action {
+            width: 100%;
+            max-width: 320px;
+            background: var(--brand-glow);
+            color: #042f1a;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px -3px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-action:hover { background: #34d399; transform: translateY(-1px); box-shadow: 0 12px 24px -3px rgba(16, 185, 129, 0.4); }
+        .btn-action:active { transform: translateY(0); }
+
+        /* ADAPTAÇÃO PARA DISPOSITIVOS MÓVEIS (Celular) */
+        @media (max-width: 768px) {
+            body { padding: 24px 12px; }
+            .intro-header { margin-bottom: 24px; }
+            .intro-header h0 { font-size: 28px; }
+            .intro-header p { font-size: 14px; }
+            .app-container { grid-template-columns: 1fr; border-radius: var(--radius-md); }
+            .workspace-sidebar { padding: 28px 20px; order: 2; border-right: none; }
+            .preview-sidebar { padding: 36px 20px; order: 1; border-bottom: 1px solid var(--border-color); }
+            .header-area { text-align: center; margin-bottom: 24px; }
+            .btn-action { max-width: 100%; margin-top: 18px; }
+            .canvas-container { max-width: 270px; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>VIII Pedalada - Santa Luzia</h1>
-    
-    <button class="btn btn-upload" onclick="document.getElementById('fileInput').click()">1. Escolher Foto do Atleta</button>
-    <input type="file" id="fileInput" accept="image/*" style="display:none">
-
-    <div class="preview-box">
-        <canvas id="mainCanvas"></canvas>
+<!-- TEXTO DE INTRODUÇÃO BACANA E IMPONENTE -->
+<div class="intro-header">
+    <div class="badge">
+        <span class="badge-dot"></span> Card Oficial de Confirmação
     </div>
+    <main-title><span style="display:block; font-size:38px; font-weight:800; line-height:1.2; background: linear-gradient(135deg, #ffffff 30%, #a7f3d0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px;">VIII Pedalada Santa Luzia</span></main-title>
+    <p>Gere o seu pôster personalizado em alta definição de forma rápida. Escolha sua foto de ciclista, faça os ajustes finos e compartilhe nas suas redes sociais!</p>
+</div>
 
-    <div class="controls">
-        <div class="control-group">
-            <label>Zoom da Foto</label>
-            <input type="range" id="zoom" min="0.1" max="4" step="0.01" value="1.0">
+<div class="app-container">
+    
+    <!-- CONTEÚDO E CONFIGURAÇÃO -->
+    <div class="workspace-sidebar">
+        <div class="header-area">
+            <h1>Configuração do Atleta</h1>
+            <p>Customize o enquadramento da sua foto no grid</p>
         </div>
-        
-        <div class="control-group">
-            <label>Ajustar Posição da Foto</label>
-            <div class="dpad-container">
-                <button class="btn-pad" onclick="move('y', -15)">▲</button>
-                <div class="dpad-row">
-                    <button class="btn-pad" onclick="move('x', -15)">◀</button>
-                    <button class="btn-pad" style="background:#cbd5e1; cursor:default;" onclick="resetPos()">⚫</button>
-                    <button class="btn-pad" onclick="move('x', 15)">▶</button>
+
+        <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+            </svg>
+            <p>Selecione sua melhor foto</p>
+            <span>Toque para abrir a galeria ou arquivos</span>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" style="display:none">
+
+        <div class="control-card">
+            <div class="slider-wrapper">
+                <div class="slider-header">
+                    <label for="zoom">Escala da Imagem</label>
+                    <span class="slider-value" id="val-zoom">100%</span>
                 </div>
-                <button class="btn-pad" onclick="move('y', 15)">▼</button>
+                <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1.0">
+            </div>
+
+            <div class="slider-wrapper">
+                <div class="slider-header">
+                    <label for="posX">Deslocar Lateralmente</label>
+                    <span class="slider-value" id="val-posX">Eixo X</span>
+                </div>
+                <input type="range" id="posX" min="-400" max="400" value="0">
+            </div>
+
+            <div class="slider-wrapper">
+                <div class="slider-header">
+                    <label for="posY">Ajustar Altura</label>
+                    <span class="slider-value" id="val-posY">Eixo Y</span>
+                </div>
+                <input type="range" id="posY" min="-400" max="400" value="0">
             </div>
         </div>
-
-        <input type="hidden" id="posX" value="0">
-        <input type="hidden" id="posY" value="0">
     </div>
 
-    <button class="btn btn-download" id="btnDownload">2. Salvar e Baixar Story</button>
+    <!-- PREVIEW PROFISSIONAL COM DETECTOR DE ESTADO -->
+    <div class="preview-sidebar">
+        <div class="canvas-container">
+            <div class="placeholder-overlay" id="placeholder">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <p>Aguardando upload da foto...</p>
+            </div>
+            <canvas id="mainCanvas"></canvas>
+        </div>
+        <button class="btn-action" id="btnDownload">
+            <svg style="width:18px;height:18px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Gerar e Baixar Card
+        </button>
+    </div>
+
 </div>
 
 <script>
@@ -160,9 +361,8 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
-    // Dimensões exatas obtidas a partir de "image_58a861.jpg"
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
-    const qualityScale = 3; 
+    const qualityScale = 2.5; 
 
     let molduraCarregada = false;
     let atletaCarregado = false;
@@ -171,15 +371,8 @@
     canvas.height = H * qualityScale;
     ctx.scale(qualityScale, qualityScale);
 
-    imgMoldura.onload = () => {
-        molduraCarregada = true;
-        render();
-    };
-    imgMoldura.onerror = () => {
-        console.log("Erro ao carregar moldura base.");
-        render();
-    };
-    // Tenta carregar como .png ou muda para .jpg se necessário
+    imgMoldura.onload = () => { molduraCarregada = true; render(); };
+    imgMoldura.onerror = () => { render(); };
     imgMoldura.src = 'euvou.jpg'; 
 
     document.getElementById('fileInput').onchange = (e) => {
@@ -189,6 +382,8 @@
             reader.onload = (f) => {
                 imgAtleta.onload = () => {
                     atletaCarregado = true;
+                    document.getElementById('placeholder').style.opacity = '0';
+                    setTimeout(() => document.getElementById('placeholder').style.display = 'none', 300);
                     render();
                 };
                 imgAtleta.src = f.target.result;
@@ -197,42 +392,35 @@
         }
     };
 
-    document.getElementById('zoom').oninput = render;
-
-    function move(axis, value) {
-        const input = document.getElementById(axis === 'x' ? 'posX' : 'posY');
-        input.value = parseInt(input.value) + value;
-        render();
-    }
-
-    function resetPos() {
-        document.getElementById('posX').value = 0;
-        document.getElementById('posY').value = 0;
-        document.getElementById('zoom').value = 1.0;
-        render();
-    }
+    const sliders = ['zoom', 'posX', 'posY'];
+    sliders.forEach(id => {
+        document.getElementById(id).oninput = () => {
+            if (id === 'zoom') {
+                document.getElementById('val-zoom').innerText = Math.round(document.getElementById(id).value * 100) + '%';
+            } else {
+                const labelDirection = id === 'posX' ? 'X: ' : 'Y: ';
+                document.getElementById(`val-${id}`).innerText = labelDirection + document.getElementById(id).value + 'px';
+            }
+            render();
+        };
+    });
 
     function render() {
         ctx.clearRect(0, 0, W, H);
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. MOLDURA EM SEGUNDO PLANO (Fundo definitivo)
         if (molduraCarregada) {
             ctx.drawImage(imgMoldura, 0, 0, W, H);
         } else {
-            // Fundo padrão caso a imagem demore para responder localmente
-            ctx.fillStyle = "#e2e8f0";
+            ctx.fillStyle = "#111827";
             ctx.fillRect(0, 0, W, H);
         }
 
-        // 2. FOTO DO ATLETA EM PRIMEIRO PLANO (Por cima, mas restrita ao quadrado)
         if (atletaCarregado && imgAtleta.src) {
             ctx.save();
-            
-            // Cria a máscara exatamente em cima do espaço preto da moldura original
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
-            ctx.clip(); // Corta tudo o que estiver fora desse limite
+            ctx.clip();
             
             const z = parseFloat(document.getElementById('zoom').value);
             const px = parseInt(document.getElementById('posX').value);
@@ -247,20 +435,11 @@
                 drawW = (area.h * aspect) * z;
             }
             
-            // Desenha a foto por cima, limitada estritamente ao quadrado delimitado
             ctx.drawImage(imgAtleta, 
                 area.x + (area.w - drawW) / 2 + px, 
                 area.y + (area.h - drawH) / 2 + py, 
                 drawW, drawH
             );
-            
-            ctx.restore();
-        } else if (!molduraCarregada) {
-            // Indicador visual preto se nada estiver carregado
-            ctx.save();
-            ctx.fillStyle = "#000000";
-            drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
-            ctx.fill();
             ctx.restore();
         }
     }
@@ -280,9 +459,9 @@
     }
 
     document.getElementById('btnDownload').onclick = () => {
-        if (!atletaCarregado) return alert("Por favor, adicione sua foto antes de baixar!");
+        if (!atletaCarregado) return alert("Por favor, adicione sua foto antes de exportar!");
         const link = document.createElement('a');
-        link.download = 'Pedalada_Santa_Luzia_Story.png';
+        link.download = 'VIII_Pedalada_Card.png';
         link.href = canvas.toDataURL('image/png', 1.0);
         link.click();
     };
