@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Santa Luzia - Gerador de Story</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
             --primary: #2d5a27; 
@@ -73,21 +73,8 @@
             letter-spacing: 0.5px;
         }
         
-        input[type="text"] { 
-            width: 100%; 
-            padding: 12px 16px; 
-            border: 2px solid #cbd5e1; 
-            border-radius: 10px; 
-            font-family: 'Montserrat'; 
-            font-weight: 700; 
-            box-sizing: border-box; 
-            font-size: 14px;
-            transition: border-color 0.2s;
-        }
-        input[type="text"]:focus { border-color: var(--primary); outline: none; }
         input[type="range"] { width: 100%; height: 6px; accent-color: var(--primary); margin: 8px 0; cursor: pointer; }
         
-        /* Ajustes Finos com Botões (D-Pad) */
         .dpad-container {
             display: flex;
             flex-direction: column;
@@ -126,9 +113,6 @@
         .btn-upload:hover { background: #1e293b; }
         .btn-download { background: var(--primary); color: white; margin-top: 15px; box-shadow: 0 4px 12px rgba(45,90,39,0.2); }
         .btn-download:hover { background: var(--primary-hover); }
-        
-        .flex-row { display: flex; gap: 12px; }
-        .flex-row > div { flex: 1; }
     </style>
 </head>
 <body>
@@ -145,32 +129,25 @@
 
     <div class="controls">
         <div class="control-group">
-            <label>Nome do Atleta (vai na foto)</label>
-            <input type="text" id="nomeAtleta" placeholder="EX: BRUNA">
-        </div>
-
-        <div class="control-group">
             <label>Zoom da Foto</label>
             <input type="range" id="zoom" min="0.1" max="4" step="0.01" value="1.2">
         </div>
         
         <div class="control-group">
-            <label>Ajuste Fino de Posição (Clique ou Segure)</label>
+            <label>Ajustar Posição da Foto</label>
             <div class="dpad-container">
-                <button class="btn-pad" onclick="move('y', -10)">▲</button>
+                <button class="btn-pad" onclick="move('y', -15)">▲</button>
                 <div class="dpad-row">
-                    <button class="btn-pad" onclick="move('x', -10)">◀</button>
+                    <button class="btn-pad" onclick="move('x', -15)">◀</button>
                     <button class="btn-pad" style="background:#cbd5e1; cursor:default;" onclick="resetPos()">⚫</button>
-                    <button class="btn-pad" onclick="move('x', 10)">▶</button>
+                    <button class="btn-pad" onclick="move('x', 15)">▶</button>
                 </div>
-                <button class="btn-pad" onclick="move('y', 10)">▼</button>
+                <button class="btn-pad" onclick="move('y', 15)">▼</button>
             </div>
         </div>
 
-        <div class="flex-row" style="display: none;">
-            <input type="range" id="posX" min="-600" max="600" value="0">
-            <input type="range" id="posY" min="-600" max="600" value="0">
-        </div>
+        <input type="hidden" id="posX" value="0">
+        <input type="hidden" id="posY" value="0">
     </div>
 
     <button class="btn btn-download" id="btnDownload">2. Salvar e Baixar Story</button>
@@ -183,45 +160,44 @@
     const imgAtleta = new Image();
 
     const W = 1080, H = 1920;
-    // Mapeamento preciso da caixa preta baseada na imagem da moldura
     const area = { x: 92, y: 72, w: 896, h: 938, r: 90 };
     const qualityScale = 3; 
 
     let molduraCarregada = false;
+    let atletaCarregado = false;
 
     canvas.width = W * qualityScale;
     canvas.height = H * qualityScale;
     ctx.scale(qualityScale, qualityScale);
 
-    // Certifique-se de salvar a moldura com o nome correto na mesma pasta (pode ser .png ou .jpg)
-    imgMoldura.src = 'euvou.png'; 
-    
+    // Carrega a moldura. Se falhar, avisa no console mas NÃO trava o script
     imgMoldura.onload = () => {
         molduraCarregada = true;
         render();
     };
     imgMoldura.onerror = () => {
-        // Fallback caso seja .jpg
-        imgMoldura.src = 'euvou.jpg';
+        console.log("Aviso: Arquivo 'euvou.png' não encontrado. Mostrando apenas a foto selecionada.");
+        render();
     };
+    imgMoldura.src = 'euvou.png'; 
 
     document.getElementById('fileInput').onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (f) => {
+                imgAtleta.onload = () => {
+                    atletaCarregado = true;
+                    render();
+                };
                 imgAtleta.src = f.target.result;
-                imgAtleta.onload = render;
             };
             reader.readAsDataURL(file);
         }
     };
 
-    // Ouvintes de eventos para inputs de texto e zoom
-    document.getElementById('nomeAtleta').oninput = render;
     document.getElementById('zoom').oninput = render;
 
-    // Funções auxiliares para movimentação facilitada
     function move(axis, value) {
         const input = document.getElementById(axis === 'x' ? 'posX' : 'posY');
         input.value = parseInt(input.value) + value;
@@ -240,10 +216,15 @@
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // 1. DESENHA A FOTO DO ATLETA (Fica por baixo)
-        if (imgAtleta.src && imgAtleta.complete) {
+        // Se a moldura falhar ou sumir, cria um fundo cinza claro para você ver onde a foto está sendo mexida
+        if (!molduraCarregada) {
+            ctx.fillStyle = "#e2e8f0";
+            ctx.fillRect(0, 0, W, H);
+        }
+
+        // 1. FOTO DO ATLETA (Renderiza de forma independente)
+        if (atletaCarregado && imgAtleta.src) {
             ctx.save();
-            // Recorta a foto no formato do quadrado arredondado para não vazar nas bordas externas do story
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
             ctx.clip();
             
@@ -255,7 +236,6 @@
             let drawW = area.w * z;
             let drawH = (area.w / aspect) * z;
             
-            // Garante preenchimento completo sem deixar frestas pretas
             if (drawH < area.h * z) {
                 drawH = area.h * z;
                 drawW = (area.h * aspect) * z;
@@ -268,30 +248,17 @@
             );
             ctx.restore();
         } else {
-            // Se não escolheu foto, mantém o fundo preto indicador
+            // Se não tiver foto instalada, preenche o espaço com a cor preta padrão da sua moldura
             ctx.save();
-            ctx.fillStyle = "#1e293b";
+            ctx.fillStyle = "#000000";
             drawRoundedRect(ctx, area.x, area.y, area.w, area.h, area.r);
             ctx.fill();
             ctx.restore();
         }
 
-        // 2. DESENHA A MOLDURA FIXA (Fica por cima, cobrindo o quadrado)
+        // 2. MOLDURA (Fica por cima, se estiver carregada na pasta)
         if (molduraCarregada) {
             ctx.drawImage(imgMoldura, 0, 0, W, H);
-        }
-
-        // 3. TEXTOS ESCRITOS
-        renderTextos();
-    }
-
-    function renderTextos() {
-        const nome = document.getElementById('nomeAtleta').value.toUpperCase().trim();
-        ctx.textAlign = 'center';
-        if (nome) {
-            ctx.font = "900 82px 'Montserrat'";
-            ctx.fillStyle = "#111827"; // Cor escura premium para o nome
-            ctx.fillText(nome, W / 2, 1435);
         }
     }
 
@@ -310,7 +277,7 @@
     }
 
     document.getElementById('btnDownload').onclick = () => {
-        if (!imgAtleta.src) return alert("Por favor, adicione sua foto antes de baixar!");
+        if (!atletaCarregado) return alert("Por favor, adicione sua foto antes de baixar!");
         const link = document.createElement('a');
         link.download = 'Pedalada_Santa_Luzia_Story.png';
         link.href = canvas.toDataURL('image/png', 1.0);
